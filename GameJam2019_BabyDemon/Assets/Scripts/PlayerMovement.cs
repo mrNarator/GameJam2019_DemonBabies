@@ -5,16 +5,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-	[SerializeField]
-	private float moveForce;
-	[SerializeField]
-	private float velocityLimit;
-	[SerializeField]
-	[Range(0f, 1f)]
-	private float moveDampening;
-
-	[SerializeField]
-	private float jumpVelocity;
+	private Config _config;
 
 	private Rigidbody2D _rigidBody;
 	public bool IsGrounded { get; private set; }
@@ -28,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
 
 	private void Start()
 	{
+		_config = Settings.Get.PlayerMovementSettings;
 		GlobalEvents.GetEvent<CameraFollowEvent>().Publish(transform);
 	}
 
@@ -65,13 +57,13 @@ public class PlayerMovement : MonoBehaviour
 		{
 			if(Mathf.Approximately(Mathf.Epsilon, moveInput))
 			{
-				vel.x = vel.x * moveDampening;
+				vel.x = vel.x * _config.moveDampening;
 			}
 			else
 			{
 				if(Mathf.Sign(jumpDirection) != Mathf.Sign(moveInput))
 				{
-					vel.x = moveInput * moveForce * Time.fixedDeltaTime * moveDampening;
+					vel.x = moveInput * _config.moveForce * Time.fixedDeltaTime * _config.moveDampening;
 				}
 			}
 			_rigidBody.velocity = vel;
@@ -83,11 +75,11 @@ public class PlayerMovement : MonoBehaviour
 			_rigidBody.velocity = vel;
 			return;
 		}
-		moveInput = moveInput * moveForce * Time.fixedDeltaTime;
+		moveInput = moveInput * _config.moveForce * Time.fixedDeltaTime;
 		vel.x = moveInput;
 
 
-		vel.x = Mathf.Clamp(vel.x, -velocityLimit, velocityLimit);
+		vel.x = Mathf.Clamp(vel.x, -_config.velocityLimit, _config.velocityLimit);
 		_rigidBody.velocity = vel;
 	}
 
@@ -102,12 +94,23 @@ public class PlayerMovement : MonoBehaviour
 		IsGrounded = false;
 		var vel = _rigidBody.velocity;
 		jumpDirection = vel.x;
-		vel.y = jumpVelocity * Time.deltaTime;
+		vel.y = _config.jumpVelocity * Time.deltaTime;
 		_rigidBody.velocity = vel;
 	}
 
 	private void OnCollisionEnter2D(Collision2D collision)
 	{
 		IsGrounded = true;
+	}
+	
+	[System.Serializable]
+	public class Config
+	{
+		public float moveForce;
+		public float velocityLimit;
+		[Range(0f, 1f)]
+		public float moveDampening;
+
+		public float jumpVelocity;
 	}
 }
