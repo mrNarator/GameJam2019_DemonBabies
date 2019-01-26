@@ -12,6 +12,9 @@ namespace DB
 		{
 			public const string JUMP = "Jump";
 			public const string HORIZONTAL = "Horizontal";
+			public const string RIGHT = "right";
+			public const string LEFT = "left";
+			public const string SUBMIT = "Submit";
 		}
 	}
 }
