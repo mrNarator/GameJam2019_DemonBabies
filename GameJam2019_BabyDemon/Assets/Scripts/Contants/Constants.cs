@@ -12,6 +12,7 @@ namespace DB
 		{
 			public const string JUMP = "Jump";
 			public const string HORIZONTAL = "Horizontal";
+			public const string INTERACTION = "Fire1";
 		}
 	}
 }
