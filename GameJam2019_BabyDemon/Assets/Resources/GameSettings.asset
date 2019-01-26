@@ -17,3 +17,9 @@ MonoBehaviour:
     velocityLimit: 500
     moveDampening: 0.386
     jumpVelocity: 250
+  InteractionSettings:
+    InteractionRange: 2
+    InteractionWidth: 0.5
+    InteractionEdgeRadius: 0.1
+  ControlSettings:
+    resolveDelayTemp: 3
