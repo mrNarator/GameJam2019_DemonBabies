@@ -13,7 +13,13 @@ MonoBehaviour:
   m_Name: GameSettings
   m_EditorClassIdentifier: 
   PlayerMovementSettings:
-    moveForce: 1000
-    velocityLimit: 10000
-    moveDampening: 0.25
-    jumpVelocity: 1000
+    moveForce: 100
+    velocityLimit: 500
+    moveDampening: 0.386
+    jumpVelocity: 250
+  InteractionSettings:
+    InteractionRange: 2
+    InteractionWidth: 0.5
+    InteractionEdgeRadius: 0.1
+  ControlSettings:
+    resolveDelayTemp: 3

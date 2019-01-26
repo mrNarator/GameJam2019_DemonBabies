@@ -1,9 +1,12 @@
-﻿using UnityEngine;
+﻿using DB;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "GameSettings.asset", menuName = "CreateGameSettings")]
 public class Settings : ScriptableObject
 {
 	public PlayerMovement.Config PlayerMovementSettings;
+	public CharacterInteraction.Config InteractionSettings;
+	public CharacterControls.Config ControlSettings;
 
 	private const string defaultLocation = "GameSettings";
 	private static Settings _settings;

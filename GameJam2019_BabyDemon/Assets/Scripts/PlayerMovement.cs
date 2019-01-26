@@ -10,6 +10,8 @@ public class PlayerMovement : MonoBehaviour
 	private Rigidbody2D _rigidBody;
 	public bool IsGrounded { get; private set; }
 	private bool tryJump;
+
+	private bool interacting;
 	private float jumpDirection;
 
 	private void Awake()
@@ -21,10 +23,14 @@ public class PlayerMovement : MonoBehaviour
 	{
 		_config = Settings.Get.PlayerMovementSettings;
 		GlobalEvents.GetEvent<CameraFollowEvent>().Publish(transform);
+		GlobalEvents.GetEvent<InteractionTrigerredEvent>().Subscribe(OnInteractionTrigerred);
+		GlobalEvents.GetEvent<FightFInishedEvent>().Subscribe(OnFightFinished);
 	}
 
 	private void OnDestroy()
 	{
+		GlobalEvents.GetEvent<FightFInishedEvent>().Subscribe(OnFightFinished);
+		GlobalEvents.GetEvent<InteractionTrigerredEvent>().Subscribe(OnInteractionTrigerred);
 		GlobalEvents.GetEvent<CameraFollowEvent>().Publish(null);
 	}
 
@@ -39,6 +45,11 @@ public class PlayerMovement : MonoBehaviour
 
 	private void FixedUpdate()
 	{
+		if(interacting)
+		{
+			return;
+		}
+
 		ApplyMovement();
 		if(tryJump)
 		{
@@ -102,7 +113,19 @@ public class PlayerMovement : MonoBehaviour
 	{
 		IsGrounded = true;
 	}
-	
+
+	private void OnFightFinished()
+	{
+		interacting = false;
+		_rigidBody.simulated = true;
+	}
+
+	private void OnInteractionTrigerred(Transform withWhat)
+	{
+		interacting = true;
+		_rigidBody.simulated = false;
+	}
+
 	[System.Serializable]
 	public class Config
 	{

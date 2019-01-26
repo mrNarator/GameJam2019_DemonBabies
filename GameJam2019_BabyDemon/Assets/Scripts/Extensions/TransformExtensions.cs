@@ -15,9 +15,27 @@ namespace DB.Extensions
 			Vector3 thisPos = referencePos;
 			float referenceDist = float.MaxValue;
 
-			foreach (GameObject item in searchObjects)
+			foreach (var item in searchObjects)
 			{
 				float dist = Vector3.SqrMagnitude(item.transform.position - thisPos);
+				if (dist < referenceDist)
+				{
+					referenceDist = dist;
+					closest = item;
+				}
+			}
+			return closest;
+		}
+
+		public static Transform FindClosest(this IEnumerable<Transform> searchObjects, Vector3 referencePos)
+		{
+			Transform closest = null;
+			Vector3 thisPos = referencePos;
+			float referenceDist = float.MaxValue;
+
+			foreach (var item in searchObjects)
+			{
+				float dist = Vector3.SqrMagnitude(item.position - thisPos);
 				if (dist < referenceDist)
 				{
 					referenceDist = dist;
