@@ -17,5 +17,10 @@ namespace DB
 			public const string SUBMIT = "Fire1";
 			public const string INTERACTION = "Fire1";
 		}
+
+		public static class Prefs
+		{
+			public const string HIScore = "key_HiScore";
+		}
 	}
 }

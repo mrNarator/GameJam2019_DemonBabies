@@ -9,6 +9,8 @@ public class Settings : ScriptableObject
 	public CharacterInteraction.Config InteractionSettings;
 	public CharacterControls.Config ControlSettings;
 	public Enemy EnemySettings;
+	public GameplayConfig GameplaySettings;
+	public GeneralPrefabsConfig GeneralPrefabs;
 
 	private const string defaultLocation = "GameSettings";
 	private static Settings _settings;
@@ -16,6 +18,13 @@ public class Settings : ScriptableObject
 	[System.Serializable]
 	public class GameplayConfig
 	{
+		public int NumberOfLives;
+	}
+
+	[System.Serializable]
+	public class GeneralPrefabsConfig
+	{
+		public GameObject UIStatusPrefab;
 	}
 
 	[System.Serializable]

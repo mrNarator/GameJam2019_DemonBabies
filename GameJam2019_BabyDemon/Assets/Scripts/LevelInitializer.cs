@@ -30,6 +30,8 @@ namespace DB
 				spawnF(info, null);
 			}
 
+			Instantiate(Settings.Get.GeneralPrefabs.UIStatusPrefab);
+
 			GlobalEvents.GetEvent<LevelSetupEvent>().Publish();
 		}
 
