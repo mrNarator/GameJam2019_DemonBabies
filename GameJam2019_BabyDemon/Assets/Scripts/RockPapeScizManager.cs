@@ -23,9 +23,6 @@ public class RockPapeScizManager : MonoBehaviour
 	//public Transform raisedFinalUpLeftHand;
 	//public Transform raisedFinalUpRightHand;
 
-	public BaseConsumable TestEnemy;
-	public PlayerMovement TestPlayer;
-
 	private Camera mainCamera;
 	private RockPapeSciz selected;
 	private int selectedIndex;
@@ -49,10 +46,6 @@ public class RockPapeScizManager : MonoBehaviour
 		GlobalEvents.GetEvent<RockPapeScizEvent>().Subscribe(HandleRockPapeSciz);
 		rockPapeScizCanvasPrefab.SetActive(false);
 	}
-	void Start()
-    {
-		HandleRockPapeSciz(RockPapeScizEvent.Args.Make(TestPlayer, TestEnemy));
-    }
 
 	private void OnDestroy()
 	{
@@ -134,7 +127,16 @@ public class RockPapeScizManager : MonoBehaviour
 	}
 	private void HandleFinalResult()
 	{
+		RockPapeScizResult outcome = RockPapeScizSolver.solveOutcome(playerChosenState, enemyPickedState);
 
+		switch(outcome)
+		{
+			case RockPapeScizResult.Win:
+				enemy.Kill();
+					break;
+			default:
+				break;
+		}
 	}
 	private void HandleCardSelectionInput()
 	{

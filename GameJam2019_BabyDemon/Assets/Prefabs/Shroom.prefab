@@ -68,4 +68,9 @@ MonoBehaviour:
   demonPowerAmount: 1
   throwUpForce: 4
   angularVelocity: 0.5
+  sliderSpeed: 0
+  partialProportionPaper: 0
+  partialProportionRock: 0
+  partialProportionScissors: 0
+  ZIndex: 0
   killSound: {fileID: 0}
