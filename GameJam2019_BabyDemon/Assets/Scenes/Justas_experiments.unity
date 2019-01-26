@@ -202,7 +202,15 @@ MonoBehaviour:
       type: 3}
     Parent: {fileID: 786785047}
     SpawnLogic: 2
-    SpawnsCount: 4
+    SpawnsCount: 1
+  - SpawnLocations:
+    - {fileID: 1083624063}
+    - {fileID: 555393866}
+    PrefabToSpawn: {fileID: 4115426384777342508, guid: 6e4ff40bffcdd30418ab494bf4ead23b,
+      type: 3}
+    Parent: {fileID: 169581132}
+    SpawnLogic: 1
+    SpawnsCount: 0
 --- !u!1 &247947781
 GameObject:
   m_ObjectHideFlags: 0

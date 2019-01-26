@@ -27,8 +27,8 @@ MonoBehaviour:
     Movement:
       MovementValue: 3
       JumpForce: 300
-      MovementType: 1
+      TargetTimeout: 4
     AI:
-      HorizontalTargetingVal: 5
-      VerticalTargettingVal: 2
+      HorizontalTargetingVal: 1
+      VerticalTargettingVal: 0.3
       BehaviourStepDelay: 4
