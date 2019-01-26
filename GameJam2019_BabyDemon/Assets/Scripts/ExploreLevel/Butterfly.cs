@@ -6,6 +6,7 @@ using UnityEngine;
 public class Butterfly : BaseConsumable
 {
 	//var target:Vector3;
+	public float flyDistanceMultiplyer;
 	private Vector2 target;
 	private float sec = 3;
 	private bool interacting;
@@ -42,7 +43,8 @@ public class Butterfly : BaseConsumable
 	
 	Vector2 ResetTarget()
 	{
-		return new Vector2(Random.Range(transform.position.x + -2, transform.position.x + 2), Random.Range(transform.position.y + -2, transform.position.y + 2));
+		return new Vector2(Random.Range(transform.position.x + -2 *flyDistanceMultiplyer, transform.position.x + 2 * flyDistanceMultiplyer), 
+			Random.Range(transform.position.y + -2 * flyDistanceMultiplyer, transform.position.y + 2 * flyDistanceMultiplyer));
 	}
 
 	float ResetSec()
