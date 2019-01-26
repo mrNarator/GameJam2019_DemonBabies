@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GameSettings
   m_EditorClassIdentifier: 
   PlayerMovementSettings:
-    moveForce: 1000
-    velocityLimit: 10000
-    moveDampening: 0.003
-    jumpVelocity: 400
+    moveForce: 100
+    velocityLimit: 500
+    moveDampening: 0.386
+    jumpVelocity: 250
