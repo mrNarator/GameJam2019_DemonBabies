@@ -8,4 +8,5 @@ public class RockPapeScizSO : ScriptableObject
 	public RockPapeScizState state;
 	public Sprite icon;
 	public Sprite cardBackGroundSprite;
+	public GameObject Model3D;
 }

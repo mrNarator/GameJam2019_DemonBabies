@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 1
   icon: {fileID: 0}
+  cardBackGroundSprite: {fileID: 0}
+  Model3D: {fileID: 100000, guid: 8517304e9d5550f4689f159782e1549d, type: 3}

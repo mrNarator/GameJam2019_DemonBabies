@@ -11,23 +11,15 @@ namespace DB.EventSystem
 	{
 		public class Args
 		{
-			PlayerMovement Player;
-			IRockPapeSciz Enemy;
+			public PlayerMovement Player;
+			public BaseConsumable Enemy;
 
-			//public static Args Make(PlayerMovement player, IRockPapeSciz enemy)
-			//{
-			//	return new Args
-			//	{
-			//		Player = player,
-			//		Enemy = enemy,
-			//	};
-			//}
-			public static Args Make()
+			public static Args Make(PlayerMovement player, BaseConsumable baseConsumable )
 			{
 				return new Args
 				{
-					//Player = player,
-					//Enemy = enemy,
+					Player = player,
+					Enemy = baseConsumable,
 				};
 			}
 		}

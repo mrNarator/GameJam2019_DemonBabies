@@ -14,6 +14,13 @@ public class BaseConsumable : MonoBehaviour
 	public float throwUpForce;
 	public float angularVelocity;
 
+	[Header("ROckPapeScizSliderOptions")]
+	public float sliderSpeed;
+	public float partialProportionPaper;
+	public float partialProportionRock;
+	public float partialProportionScissors;
+
+
 	public int ZIndex;
 	public AudioClip killSound;
 

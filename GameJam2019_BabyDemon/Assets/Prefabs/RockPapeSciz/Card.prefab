@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 511685820901201661}
   - component: {fileID: 511685820901201662}
   - component: {fileID: 511685820901201632}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Bg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -85,7 +85,7 @@ GameObject:
   - component: {fileID: 511685822213546020}
   - component: {fileID: 511685822213546018}
   - component: {fileID: 511685822213546019}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -159,7 +159,7 @@ GameObject:
   - component: {fileID: 511685822667014063}
   - component: {fileID: 511685822667013969}
   - component: {fileID: 511685822667013968}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Card
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -195,9 +195,9 @@ SortingGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 511685822667013971}
   m_Enabled: 1
-  m_SortingLayerID: -1196400489
+  m_SortingLayerID: -118223887
   m_SortingLayer: 1
-  m_SortingOrder: 1
+  m_SortingOrder: 2
 --- !u!114 &511685822667013968
 MonoBehaviour:
   m_ObjectHideFlags: 0

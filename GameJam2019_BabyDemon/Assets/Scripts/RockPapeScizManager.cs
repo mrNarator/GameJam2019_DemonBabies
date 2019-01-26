@@ -13,17 +13,35 @@ public class RockPapeScizManager : MonoBehaviour
 	public List<RockPapeScizSO> rockPapeScizSOs = new List<RockPapeScizSO>();
 
 	public List<RockPapeSciz> cardsVisualOptions = new List<RockPapeSciz>();
+	
+
+	public EnemyResponsiveRPSSlider rpsSlider;
+
+
+	//public Transform rasedLeftHand;
+	//public Transform raisedRightHand;
+	//public Transform raisedFinalUpLeftHand;
+	//public Transform raisedFinalUpRightHand;
+
+	public BaseConsumable TestEnemy;
+	public PlayerMovement TestPlayer;
 
 	private Camera mainCamera;
 	private RockPapeSciz selected;
 	private int selectedIndex;
 
 	private bool handlingCardSelection = false;
-	private bool handlingEnemySelection = false;
 	private bool handlingFinalResult = false;
+	private bool managerIsBusy = false;
+
+	private bool movingHandsUp = true;
+	private bool moovingHandsDown = false;
 
 	private RockPapeScizState playerChosenState;
 	private RockPapeScizState enemyPickedState;
+
+	private BaseConsumable enemy;
+	private PlayerMovement player;
 	
 	private void Awake()
 	{
@@ -33,7 +51,7 @@ public class RockPapeScizManager : MonoBehaviour
 	}
 	void Start()
     {
-		HandleRockPapeSciz(RockPapeScizEvent.Args.Make());
+		HandleRockPapeSciz(RockPapeScizEvent.Args.Make(TestPlayer, TestEnemy));
     }
 
 	private void OnDestroy()
@@ -46,10 +64,7 @@ public class RockPapeScizManager : MonoBehaviour
         if(handlingCardSelection)
 		{
 			HandleCardSelectionInput();
-		}
-		else if(handlingEnemySelection)
-		{
-			HandleEnemySelection();
+			VasVasVas();
 		}
 		else if(handlingFinalResult)
 		{
@@ -59,11 +74,19 @@ public class RockPapeScizManager : MonoBehaviour
 
 	private void HandleRockPapeSciz(RockPapeScizEvent.Args args)
 	{
-		rockPapeScizCanvas = Instantiate(rockPapeScizCanvasPrefab);
+		if(rockPapeScizCanvas == null)
+		{
+			rockPapeScizCanvas = Instantiate(rockPapeScizCanvasPrefab);
+			rpsSlider = rockPapeScizCanvas.GetComponentInChildren<EnemyResponsiveRPSSlider>();
+		}
 		rockPapeScizCanvas.SetActive(true);
 		rockPapeScizCanvas.GetComponent<Canvas>().worldCamera = mainCamera;
-		StartCoroutine(ShowOptionCards());
-	
+
+		enemy = args.Enemy;
+		player = args.Player;
+		managerIsBusy = true;
+
+		StartCoroutine(ShowOptionCards());	
 	}
 
 	IEnumerator ShowOptionCards()
@@ -75,7 +98,6 @@ public class RockPapeScizManager : MonoBehaviour
 
 		float screenWidth = CanvasRect.rect.width;
 		float screenHeight = CanvasRect.rect.height;
-		Debug.Log(screenHeight);
 		float offsetX = screenWidth /(size + 1);
 		float offsetY = screenHeight / 2;
 
@@ -83,7 +105,6 @@ public class RockPapeScizManager : MonoBehaviour
 		Vector2 prevPosition = new Vector2(offsetX, offsetY) ;
 		foreach(var item in rockPapeScizSOs)
 		{
-			Debug.Log(prevPosition);
 			GameObject temp = GameObject.Instantiate(rockPapeScizCardPrefab, rockPapeScizCanvas.transform);
 			StartCoroutine(SetPositionForRect(temp, new Vector2(prevPosition.x, prevPosition.y)));
 			RockPapeSciz option =temp.GetComponent<RockPapeSciz>();
@@ -91,6 +112,9 @@ public class RockPapeScizManager : MonoBehaviour
 			cardsVisualOptions.Add(option);
 			prevPosition = new Vector2(prevPosition.x + offsetX, offsetY);
 		}
+
+		rpsSlider.gameObject.SetActive(true);
+		rpsSlider.SetUpSlider(enemy);
 
 		selectedIndex = 0;
 		selected = cardsVisualOptions[0];
@@ -104,13 +128,13 @@ public class RockPapeScizManager : MonoBehaviour
 		yield return null;
 		obj.GetComponent<RectTransform>().localPosition += (Vector3)position;
 	}
-	private void HandleFinalResult()
+	private void VasVasVas()
 	{
 
 	}
-	private void HandleEnemySelection()
+	private void HandleFinalResult()
 	{
-		handlingEnemySelection = false;
+
 	}
 	private void HandleCardSelectionInput()
 	{
@@ -133,6 +157,8 @@ public class RockPapeScizManager : MonoBehaviour
 	private void SubmitSelection()
 	{
 		playerChosenState = selected.SO.state;
+		enemyPickedState = rpsSlider.ResolveResult();
+		rpsSlider.gameObject.SetActive(false);
 
 		selected = null;
 		selectedIndex = 0;
@@ -141,7 +167,7 @@ public class RockPapeScizManager : MonoBehaviour
 			Destroy(item.gameObject);
 		}
 		handlingCardSelection = false;
-		handlingEnemySelection = true;
+		handlingFinalResult = true;
 	}
 
 	private void MoveSelectionRight()
