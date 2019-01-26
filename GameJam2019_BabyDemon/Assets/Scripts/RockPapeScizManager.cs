@@ -1,4 +1,5 @@
-﻿using DB.EventSystem;
+﻿using DB;
+using DB.EventSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -128,24 +129,38 @@ public class RockPapeScizManager : MonoBehaviour
 		yield return null;
 		obj.GetComponent<RectTransform>().localPosition += (Vector3)position;
 	}
+
 	private void VasVasVas()
 	{
 
 	}
+
 	private void HandleFinalResult()
 	{
-
+		handlingFinalResult = false;
+		var result = RockPapeScizSolver.solveOutcome(playerChosenState, enemyPickedState);
+		GlobalEvents.GetEvent<FightFInishedEvent>().Publish();
+		if(result == RockPapeScizResult.Win)
+		{
+			ScoreManager.Get.AddScore();
+		}
+		else
+		{
+			ScoreManager.Get.RegisterLoseDraw();
+		}
+		Debug.LogFormat("resolve rersult: {0}", result.ToString());
 	}
+
 	private void HandleCardSelectionInput()
 	{
 		if(Input.GetButtonDown(DB.Const.Controls.RIGHT))
 		{
-			Debug.Log("moving right" + selectedIndex);
+			//Debug.Log("moving right" + selectedIndex);
 			MoveSelectionRight();
 		}
 		if(Input.GetButtonDown(DB.Const.Controls.LEFT))
 		{
-			Debug.Log("moving left" + selectedIndex);
+			//Debug.Log("moving left" + selectedIndex);
 			MoveSelectionLeft();
 		}
 		if(Input.GetButtonDown(DB.Const.Controls.SUBMIT))
@@ -181,6 +196,7 @@ public class RockPapeScizManager : MonoBehaviour
 		selected = cardsVisualOptions[selectedIndex];
 		selected.Select();
 	}
+	
 	private void MoveSelectionLeft()
 	{
 		if (selectedIndex <= 0 )
