@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 4251929675497143568}
   - component: {fileID: 4266246151704185204}
   - component: {fileID: 7081014106202969785}
-  - component: {fileID: 1314201782294567472}
+  - component: {fileID: 4115426384777342510}
+  - component: {fileID: 4115426384777342511}
   m_Layer: 11
-  m_Name: enemy
+  m_Name: Enemy_ButterFly
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +31,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4115426384777342508}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.39769423, y: 0.36017093, z: -0.125}
+  m_LocalPosition: {x: 0.39769423, y: 68.6, z: -0.125}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -99,7 +100,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -152,7 +153,8 @@ MonoBehaviour:
   partialProportionScissors: 1
   ZIndex: 1
   killSound: {fileID: 0}
---- !u!60 &1314201782294567472
+  flyDistanceMultiplyer: 5
+--- !u!60 &4115426384777342510
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -539,3 +541,22 @@ PolygonCollider2D:
       - {x: -3.5252244, y: 5.6821675}
       - {x: -3.582236, y: 5.64416}
       - {x: -3.582236, y: 5.625156}
+--- !u!95 &4115426384777342511
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4115426384777342508}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 85db7e5bbcdcecd42b863ae136cd240a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
