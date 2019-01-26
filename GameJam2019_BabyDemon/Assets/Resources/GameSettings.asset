@@ -23,3 +23,12 @@ MonoBehaviour:
     InteractionEdgeRadius: 0.1
   ControlSettings:
     resolveDelayTemp: 3
+  EnemySettings:
+    Movement:
+      MovementValue: 3
+      JumpForce: 300
+      MovementType: 1
+    AI:
+      HorizontalTargetingVal: 5
+      VerticalTargettingVal: 2
+      BehaviourStepDelay: 4
