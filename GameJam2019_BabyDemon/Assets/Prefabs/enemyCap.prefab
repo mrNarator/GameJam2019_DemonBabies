@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 8493647379424579932}
   - component: {fileID: 916177396747167944}
   - component: {fileID: 8282257317367615317}
-  - component: {fileID: 2868058080861967032}
+  - component: {fileID: 6861057816815232940}
   - component: {fileID: 8151241330013918876}
   - component: {fileID: 4251929675497143568}
   - component: {fileID: 4266246151704185204}
   m_Layer: 11
-  m_Name: enemy
+  m_Name: enemyCap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,7 +43,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4115426384777342508}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &8282257317367615317
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -81,8 +81,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!58 &2868058080861967032
-CircleCollider2D:
+--- !u!70 &6861057816815232940
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -95,8 +95,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.5
+  m_Size: {x: 1, y: 2}
+  m_Direction: 0
 --- !u!50 &8151241330013918876
 Rigidbody2D:
   serializedVersion: 4
@@ -131,7 +131,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementControl: {fileID: 4266246151704185204}
-  behaviourCycle: 01000000020000000100000002000000
+  behaviourCycle: 01000000030000000200000004000000
 --- !u!114 &4266246151704185204
 MonoBehaviour:
   m_ObjectHideFlags: 0

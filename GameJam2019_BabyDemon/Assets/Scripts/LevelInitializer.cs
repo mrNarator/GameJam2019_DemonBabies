@@ -1,9 +1,7 @@
-﻿using DB.Extensions;
+﻿using DB.EventSystem;
+using DB.Extensions;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace DB
@@ -31,6 +29,8 @@ namespace DB
 				spawnF = SpawnLogicMap[info.SpawnLogic];
 				spawnF(info, null);
 			}
+
+			GlobalEvents.GetEvent<LevelSetupEvent>().Publish();
 		}
 
 		private Dictionary<SpawnInfoLogic, Action<ObjInitializationInfo, Action<GameObject>>> SpawnLogicMap =

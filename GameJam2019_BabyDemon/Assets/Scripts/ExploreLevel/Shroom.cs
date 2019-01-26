@@ -7,11 +7,12 @@ using UnityEngine;
 
 public class Shroom : BaseConsumable
 {
-	public override void Awake()
+	protected override void Awake()
 	{
 		base.Awake();
 	}
-	public override void Start()
+
+	protected override void Start()
 	{
 		base.Start();
 		state.isDead = true;

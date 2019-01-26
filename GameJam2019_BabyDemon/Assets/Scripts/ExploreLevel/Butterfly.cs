@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using DB.EventSystem;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,13 +7,34 @@ public class Butterfly : BaseConsumable
 {
 	//var target:Vector3;
 	private Vector2 target;
-	private float sec = 3;	
+	private float sec = 3;
+	private bool interacting;
 
-	public override void Awake()
+	protected override void Awake()
 	{
 		base.Awake();
+		GlobalEvents.GetEvent<InteractionTrigerredEvent>().Subscribe(OnInteractionStarted);
+		GlobalEvents.GetEvent<FightFInishedEvent>().Subscribe(OnFightEnded);
 	}
-	public override void Start()
+
+	protected override void OnDestroy()
+	{
+		base.OnDestroy();
+		GlobalEvents.GetEvent<InteractionTrigerredEvent>().UnSubscribe(OnInteractionStarted);
+		GlobalEvents.GetEvent<FightFInishedEvent>().UnSubscribe(OnFightEnded);
+	}
+
+	private void OnInteractionStarted(Transform withWhat)
+	{
+		interacting = true;
+	}
+
+	private void OnFightEnded()
+	{
+		interacting = false;
+	}
+
+	protected override void Start()
 	{
 		base.Start();
 		StartCoroutine(movementPatter());
@@ -30,16 +52,21 @@ public class Butterfly : BaseConsumable
 
 	IEnumerator movementPatter()
 	{
-		if(base.state.isDead)
+		while (true)
 		{
-			base._rigibody.gravityScale = 0.1f;
-			StopCoroutine(movementPatter());
+			yield return new WaitWhile(() => interacting);
+
+			if (base.state.isDead)
+			{
+				base._rigibody.gravityScale = 0.1f;
+				yield break;
+				//StopCoroutine(movementPatter());
+			}
+			target = ResetTarget();
+			ResetSec();
+			Vector2 forceVector = target - (Vector2)transform.position;
+			_rigibody.AddForce(forceVector, ForceMode2D.Impulse);
+			yield return new WaitForSeconds(sec);
 		}
-		target = ResetTarget();
-		ResetSec();
-		Vector2 forceVector = target - (Vector2)transform.position;
-		_rigibody.AddForce(forceVector, ForceMode2D.Impulse);
-		yield return new WaitForSeconds(sec);
-		StartCoroutine(movementPatter());
 	}	
 }

@@ -28,18 +28,19 @@ public class BaseConsumable : MonoBehaviour
 	public Rigidbody2D _rigibody { get; private set; }
 
 	
-	public virtual void Awake()
+	protected virtual void Awake()
 	{
 		_rigibody = GetComponent<Rigidbody2D>();
 		transform.position = new Vector3(transform.position.x, transform.position.y, ZIndex);
 		state = new State();
 	}
-	public virtual void Start()
+
+	protected virtual void Start()
 	{
 
 	}
 
-	public virtual void OnDestroy()
+	protected virtual void OnDestroy()
 	{
 
 	}
