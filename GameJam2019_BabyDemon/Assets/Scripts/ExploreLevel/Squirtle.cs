@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 public class Squirtle : BaseConsumable
 {
 
-	public override void Awake()
+	protected override void Awake()
 	{
 		base.Awake();
 	}
-	public override void Start()
+	protected override void Start()
 	{
 		base.Start();
 	}

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DB.EventSystem;
+using System;
 using UnityEngine;
 
 namespace DB.Enemy
@@ -13,10 +14,30 @@ namespace DB.Enemy
 		Vector3 startPos;
 		float startTime;
 
+		private bool interacting;
+
 		private void Awake()
 		{
 			_config = Settings.Get.EnemySettings.Movement;
 			_rigidBody = GetComponent<Rigidbody2D>();
+			GlobalEvents.GetEvent<InteractionTrigerredEvent>().Subscribe(OnInteractionStarted);
+			GlobalEvents.GetEvent<FightFInishedEvent>().Subscribe(OnFightEnded);
+		}
+
+		private void OnDestroy()
+		{
+			GlobalEvents.GetEvent<InteractionTrigerredEvent>().Subscribe(OnInteractionStarted);
+			GlobalEvents.GetEvent<FightFInishedEvent>().Subscribe(OnFightEnded);
+		}
+
+		private void OnInteractionStarted(Transform withWhat)
+		{
+			interacting = true;
+		}
+
+		private void OnFightEnded()
+		{
+			interacting = false;
 		}
 
 		public void SetTarget(Vector3? target, Action finishedMove)
@@ -35,7 +56,7 @@ namespace DB.Enemy
 
 		private void FixedUpdate()
 		{
-			if(!target.HasValue)
+			if(!target.HasValue || interacting)
 			{
 				return;
 			}
