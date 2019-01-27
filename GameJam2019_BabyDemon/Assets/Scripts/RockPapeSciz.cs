@@ -6,6 +6,7 @@ public class RockPapeSciz : MonoBehaviour
 {
 	public RockPapeScizSO SO;
 
+    public Image selector;
 	public Image backGround;
 	public Image Icon;
 
@@ -28,11 +29,11 @@ public class RockPapeSciz : MonoBehaviour
 
 	public void Select()
 	{
-		backGround.color = Color.red;
+        selector.gameObject.SetActive(true);
 	}
 
 	public void Deselect()
 	{
-		backGround.color = Color.white;
+        selector.gameObject.SetActive(false);
 	}
 }

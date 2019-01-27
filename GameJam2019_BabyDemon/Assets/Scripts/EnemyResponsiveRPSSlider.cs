@@ -57,11 +57,11 @@ public class EnemyResponsiveRPSSlider : MonoBehaviour
 				Background.rectTransform.rect.width)
 			, 0);
 		Marker.rectTransform.anchoredPosition = (Vector3)newPosition;
-		if(newPosition.x >= Background.rectTransform.rect.width)
+		if(newPosition.x >= Background.rectTransform.rect.width - Marker.rectTransform.rect.width)
 		{
 			sliderGoingRight = false;
 		}
-		else if(newPosition.x <= 0 )
+		else if(newPosition.x <= Marker.rectTransform.rect.width )
 		{
 			sliderGoingRight = true;
 		}
