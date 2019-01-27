@@ -71,9 +71,35 @@ public class RockPapeScizManager : MonoBehaviour
 		}
 		else if(handlingFinalResult)
 		{
-			HandleFinalResult();
+			StartCoroutine(function());
 		}
     }
+	IEnumerator function ()
+	{
+		handlingFinalResult = false;
+		var result = RockPapeScizSolver.solveOutcome(playerChosenState, enemyPickedState);
+
+
+		switch (result)
+		{
+			case RockPapeScizResult.Win:
+
+				rockPapeScizCanvas.Win.gameObject.SetActive(true);
+				break;
+			case RockPapeScizResult.Loose:
+
+				rockPapeScizCanvas.Lose.gameObject.SetActive(true);
+				break;
+			case RockPapeScizResult.Draw:
+
+				rockPapeScizCanvas.Draw.gameObject.SetActive(true);
+				break;
+		}
+
+		yield return new WaitForSeconds(_config.LifeLostFadedTime);
+
+		HandleFinalResult();
+	}
 
 	private void OnGameLost(GameLostEvent.Args args)
 	{
@@ -105,8 +131,14 @@ public class RockPapeScizManager : MonoBehaviour
 			rockPapeScizCanvas = Instantiate(rockPapeScizCanvasPrefab).GetComponent<RockPaperScissorsCanvas>();
 			rpsSlider = rockPapeScizCanvas.GetComponentInChildren<EnemyResponsiveRPSSlider>();
 		}
+
 		rockPapeScizCanvas.gameObject.SetActive(true);
 		rockPapeScizCanvas.GetComponent<Canvas>().worldCamera = mainCamera;
+
+
+		rockPapeScizCanvas.Lose.gameObject.SetActive(false);
+		rockPapeScizCanvas.Win.gameObject.SetActive(false);
+		rockPapeScizCanvas.Draw.gameObject.SetActive(false);
 
 		enemy = args.Enemy;
 		player = args.Player;
