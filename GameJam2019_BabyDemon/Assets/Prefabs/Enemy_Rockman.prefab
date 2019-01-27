@@ -32,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 5039917302776059325}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 101.25702, y: 27.298622, z: -0.125}
-  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_LocalScale: {x: -2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -145,12 +145,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   demonPowerAmount: 4
-  throwUpForce: 4
+  throwUpForce: 35
   angularVelocity: 5
   sliderSpeed: 500
-  partialProportionPaper: 1
-  partialProportionRock: 4
-  partialProportionScissors: 1
+  partialProportionPaper: 2
+  partialProportionRock: 3
+  partialProportionScissors: 2
   ZIndex: 0
   killSound: {fileID: 0}
 --- !u!60 &5839013168464589957

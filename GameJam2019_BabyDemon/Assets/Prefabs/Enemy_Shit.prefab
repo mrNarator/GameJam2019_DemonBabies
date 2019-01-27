@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 3197173223042761566}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 144.31892, y: 20.980642, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -614,7 +614,7 @@ MonoBehaviour:
   angularVelocity: 6
   sliderSpeed: 500
   partialProportionPaper: 4
-  partialProportionRock: 1
+  partialProportionRock: 2
   partialProportionScissors: 1
   ZIndex: 0
   killSound: {fileID: 0}

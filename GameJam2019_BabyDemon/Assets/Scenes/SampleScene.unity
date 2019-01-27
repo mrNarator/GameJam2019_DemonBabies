@@ -2413,7 +2413,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 663419825}
   m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 2359, y: -172, z: 0}
+  m_LocalPosition: {x: 2359, y: -150, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 845148963}
@@ -2806,7 +2806,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 696269939}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1001, y: -224, z: 0}
+  m_LocalPosition: {x: 5694, y: -224, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1484518264}
@@ -3311,7 +3311,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 837479773}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2280, y: -175.1, z: 0}
+  m_LocalPosition: {x: 2281, y: -175.1, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 0}
   m_Children: []
   m_Father: {fileID: 385083351}
@@ -4034,7 +4034,7 @@ MonoBehaviour:
       type: 3}
     Parent: {fileID: 1164032508}
     SpawnLogic: 1
-    SpawnsCount: 2
+    SpawnsCount: 6
   - SpawnLocations:
     - {fileID: 1319866394}
     - {fileID: 1525531676}
@@ -4046,7 +4046,7 @@ MonoBehaviour:
   - SpawnLocations:
     - {fileID: 1831197274}
     - {fileID: 1775263911}
-    PrefabToSpawn: {fileID: 5039917302776059325, guid: c0d809da0f5da50428dde0807ad79a10,
+    PrefabToSpawn: {fileID: 3197173223042761566, guid: 3f7a46c193944b641b4d4c2811180b6c,
       type: 3}
     Parent: {fileID: 1164032508}
     SpawnLogic: 1
@@ -4061,7 +4061,7 @@ MonoBehaviour:
     SpawnsCount: 2
   - SpawnLocations:
     - {fileID: 666478857}
-    - {fileID: 476556503}
+    - {fileID: 353170446}
     PrefabToSpawn: {fileID: 4115426384777342508, guid: 8691647edaa4a73428cfca85fb767916,
       type: 3}
     Parent: {fileID: 1164032508}
