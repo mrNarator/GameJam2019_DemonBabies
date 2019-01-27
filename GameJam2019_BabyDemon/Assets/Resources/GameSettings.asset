@@ -14,28 +14,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerMovementSettings:
     moveForce: 5000
-    velocityLimit: 3000
-    moveDampening: 0.148
-    jumpVelocity: 5000
+    velocityLimit: 15000
+    moveDampening: 0.014
+    jumpVelocity: 22000
   InteractionSettings:
-    InteractionRange: 100
-    InteractionWidth: 70
+    InteractionRange: 140
+    InteractionWidth: 180
     InteractionEdgeRadius: 1
   ControlSettings:
     resolveDelayTemp: 3
+  FadingSettings:
+    FadeTime: 3
+    normalColor: {r: 1, g: 1, b: 1, a: 0}
+    fadedColor: {r: 0, g: 0, b: 0, a: 1}
   EnemySettings:
     Movement:
-      MovementValue: 3
+      MovementValue: 30
       JumpForce: 300
       TargetTimeout: 4
     AI:
-      HorizontalTargetingVal: 1
-      VerticalTargettingVal: 0.3
+      HorizontalTargetingVal: 5
+      VerticalTargettingVal: 30
       BehaviourStepDelay: 4
   GameplaySettings:
     NumberOfLives: 3
     DrawDifficultyStepIncrease: 40
     DrawDifficultyMax: 2
+    LifeLostFadedTime: 0
   GeneralPrefabs:
     UIStatusPrefab: {fileID: 4231710353304737568, guid: 20353c2fc08c0934a8d13c85148417a9,
+      type: 3}
+    UIBlankingPrefab: {fileID: 2207717197024477971, guid: 3bdea465fbb95bc4090c9f46fee595eb,
+      type: 3}
+    UIGameOver: {fileID: 5438405861947001674, guid: 96239def7a491dc4a83f9c79cae8002b,
       type: 3}

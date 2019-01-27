@@ -11,7 +11,7 @@ public class RockPapeScizManager : MonoBehaviour
 	public GameObject rockPapeScizCanvasPrefab;
 	public GameObject rockPapeScizCardPrefab;
 
-	private GameObject rockPapeScizCanvas;
+	private RockPaperScissorsCanvas rockPapeScizCanvas;
 
 	public List<RockPapeScizSO> rockPapeScizSOs = new List<RockPapeScizSO>();
 
@@ -102,15 +102,23 @@ public class RockPapeScizManager : MonoBehaviour
 
 		if(rockPapeScizCanvas == null)
 		{
-			rockPapeScizCanvas = Instantiate(rockPapeScizCanvasPrefab);
+			rockPapeScizCanvas = Instantiate(rockPapeScizCanvasPrefab).GetComponent<RockPaperScissorsCanvas>();
 			rpsSlider = rockPapeScizCanvas.GetComponentInChildren<EnemyResponsiveRPSSlider>();
 		}
-		rockPapeScizCanvas.SetActive(true);
+		rockPapeScizCanvas.gameObject.SetActive(true);
 		rockPapeScizCanvas.GetComponent<Canvas>().worldCamera = mainCamera;
 
 		enemy = args.Enemy;
 		player = args.Player;
 		managerIsBusy = true;
+
+		SpriteRenderer enemySpriteRenderer = enemy.GetComponent<SpriteRenderer>();
+		if(enemySpriteRenderer == null)
+		{
+			enemySpriteRenderer = enemy.GetComponentInChildren<SpriteRenderer>();
+		}
+
+		rockPapeScizCanvas.enemyImage.sprite = enemySpriteRenderer.sprite;
 
 		StartCoroutine(ShowOptionCards());	
 	}
@@ -184,7 +192,7 @@ public class RockPapeScizManager : MonoBehaviour
 				StartCoroutine(ResummonFightNextFrame());
 				break;
 		}
-		Destroy(rockPapeScizCanvas);
+		rockPapeScizCanvas.gameObject.SetActive(false);
 		managerIsBusy = false;
 	}
 
