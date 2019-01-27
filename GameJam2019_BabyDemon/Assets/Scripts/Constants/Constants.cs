@@ -22,5 +22,11 @@ namespace DB
 		{
 			public const string HIScore = "key_HiScore";
 		}
+
+		public static class Levels
+		{
+			public const int MainMenu = 0;
+			public const int MainLevel = 1;
+		}
 	}
 }
