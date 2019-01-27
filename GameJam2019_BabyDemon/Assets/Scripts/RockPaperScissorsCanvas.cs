@@ -10,6 +10,7 @@ public class RockPaperScissorsCanvas: MonoBehaviour
 {
 	public Image enemyImage;
 	public List<RockPapeSciz> cardsVisualOptions = new List<RockPapeSciz>();
+
     public Image Win;
     public Image Lose;
     public Image Draw;
