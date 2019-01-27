@@ -1267,7 +1267,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2041334755568575198
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1366,6 +1366,10 @@ MonoBehaviour:
   Win: {fileID: 4964240385782246310}
   Lose: {fileID: 5279364773584138005}
   Draw: {fileID: 1260470424538470125}
+  ClickClick: {fileID: 8300000, guid: b25ed027f9003d941865a48d696c3401, type: 3}
+  WinAudio: {fileID: 8300000, guid: e3cd52b84b8608349a2398b24c59b3eb, type: 3}
+  DrawAudio: {fileID: 8300000, guid: d579dc7ef8635ec448b5e4678804080a, type: 3}
+  LooseAudio: {fileID: 8300000, guid: 9adb64a0e670b3a4695761085c15505e, type: 3}
 --- !u!1 &2041334757301295063
 GameObject:
   m_ObjectHideFlags: 0
