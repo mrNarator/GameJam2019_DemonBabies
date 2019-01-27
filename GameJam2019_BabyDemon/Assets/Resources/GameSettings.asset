@@ -23,6 +23,10 @@ MonoBehaviour:
     InteractionEdgeRadius: 1
   ControlSettings:
     resolveDelayTemp: 3
+  FadingSettings:
+    FadeTime: 0.5
+    normalColor: {r: 1, g: 1, b: 1, a: 0}
+    fadedColor: {r: 0, g: 0, b: 0, a: 0}
   EnemySettings:
     Movement:
       MovementValue: 3
@@ -36,6 +40,11 @@ MonoBehaviour:
     NumberOfLives: 3
     DrawDifficultyStepIncrease: 0.2
     DrawDifficultyMax: 2
+    LifeLostFadedTime: 3
   GeneralPrefabs:
     UIStatusPrefab: {fileID: 4231710353304737568, guid: 20353c2fc08c0934a8d13c85148417a9,
+      type: 3}
+    UIBlankingPrefab: {fileID: 2207717197024477971, guid: 3bdea465fbb95bc4090c9f46fee595eb,
+      type: 3}
+    UIGameOver: {fileID: 5438405861947001674, guid: 96239def7a491dc4a83f9c79cae8002b,
       type: 3}

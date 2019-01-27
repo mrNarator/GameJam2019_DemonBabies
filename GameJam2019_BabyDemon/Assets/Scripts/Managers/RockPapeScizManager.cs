@@ -1,5 +1,7 @@
 ﻿using DB;
 using DB.EventSystem;
+using DB.EventSystem.UI;
+using DB.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -50,6 +52,9 @@ public class RockPapeScizManager : MonoBehaviour
 		GlobalEvents.GetEvent<RockPapeScizEvent>().Subscribe(HandleRockPapeSciz);
 		rockPapeScizCanvasPrefab.SetActive(false);
 		_config = Settings.Get.GameplaySettings;
+
+		GlobalEvents.GetEvent<GameLostEvent>().Subscribe(OnGameLost);
+		GlobalEvents.GetEvent<LifeChangedEvent>().Subscribe(OnLifeChanged);
 	}
 
 	private void OnDestroy()
@@ -69,6 +74,23 @@ public class RockPapeScizManager : MonoBehaviour
 			HandleFinalResult();
 		}
     }
+
+	private void OnGameLost(GameLostEvent.Args args)
+	{
+		// show lost UI;
+	}
+
+	private void OnLifeChanged(LifeChangedEvent.Args args)
+	{
+		BlankingTransitionUI.Get.ShowFade(() => StartCoroutine(LifeChangedFadedTime()));
+	}
+
+	IEnumerator LifeChangedFadedTime()
+	{
+		yield return new WaitForSeconds(_config.LifeLostFadedTime);
+		BlankingTransitionUI.Get.HideFade(() =>
+				GlobalEvents.GetEvent<FightFinishedEvent>().Publish());
+	}
 
 	private void HandleRockPapeSciz(RockPapeScizEvent.Args args)
 	{
@@ -141,17 +163,18 @@ public class RockPapeScizManager : MonoBehaviour
 	{
 		handlingFinalResult = false;
 		var result = RockPapeScizSolver.solveOutcome(playerChosenState, enemyPickedState);
-		GlobalEvents.GetEvent<FightFinishedEvent>().Publish();
 		Debug.LogFormat("resolve result: {0}", result.ToString());
 		switch(result)
 		{
 			case RockPapeScizResult.Win:
+				GlobalEvents.GetEvent<FightFinishedEvent>().Publish();
 				cumulativeDifficulty = 0f;
-				ScoreManager.Get.AddScore();
-				enemy.Kill();
+				ScoreManager.Get.AddScore(GetAwardAmount());
+				enemy?.Kill();
 				break;
 			case RockPapeScizResult.Loose:
 				cumulativeDifficulty = 0f;
+				enemy?.Kill();
 				ScoreManager.Get.RegisterLoseDraw();
 				break;
 			case RockPapeScizResult.Draw:
@@ -168,6 +191,27 @@ public class RockPapeScizManager : MonoBehaviour
 	{
 		yield return null;
 		HandleRockPapeSciz(RockPapeScizEvent.Args.Make(player, enemy));
+	}
+
+	private int GetAwardAmount()
+	{
+		var result = enemy.demonPowerAmount;
+		float selectedPercentage = 0f;
+		switch (enemyPickedState)
+		{
+			case RockPapeScizState.Paper:
+				selectedPercentage = rpsSlider.paperPercentage;
+				break;
+			case RockPapeScizState.Rock:
+				selectedPercentage = rpsSlider.rockPercentage;
+				break;
+			case RockPapeScizState.Scissors:
+				selectedPercentage = rpsSlider.scissorsPercentage;
+				break;
+		}
+		// assuming there should be sign as wide as 60 percent
+		result += Mathf.FloorToInt((100f - selectedPercentage) / 10f) - 4;
+		return result;
 	}
 
 	private void HandleCardSelectionInput()

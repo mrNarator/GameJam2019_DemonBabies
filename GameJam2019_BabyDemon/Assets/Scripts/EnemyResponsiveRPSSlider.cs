@@ -14,9 +14,9 @@ public class EnemyResponsiveRPSSlider : MonoBehaviour
 	public Image Background;
 	public Image Marker;
 
-	private float rockPercentage;
-	private float scissorsPercentage;
-	private float paperPercentage;
+	public float rockPercentage { get; private set; }
+	public float scissorsPercentage { get; private set; }
+	public float paperPercentage { get; private set; }
 
 	private bool setUp = false;
 	private bool sliderGoingRight = true;
