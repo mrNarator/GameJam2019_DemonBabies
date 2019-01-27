@@ -38,7 +38,7 @@ MonoBehaviour:
       BehaviourStepDelay: 4
   GameplaySettings:
     NumberOfLives: 3
-    DrawDifficultyStepIncrease: 0.2
+    DrawDifficultyStepIncrease: 40
     DrawDifficultyMax: 2
     LifeLostFadedTime: 3
   GeneralPrefabs:

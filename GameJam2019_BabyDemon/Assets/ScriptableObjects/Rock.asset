@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Rock
   m_EditorClassIdentifier: 
   state: 1
-  icon: {fileID: 0}
-  cardBackGroundSprite: {fileID: 0}
+  icon: {fileID: 21300000, guid: 1fa1082b288e95a4bbd2cd57e7119e57, type: 3}
+  cardBackGroundSprite: {fileID: 21300000, guid: a7cff508b2e812245b9816e5c069931c,
+    type: 3}
   Model3D: {fileID: 100000, guid: 8517304e9d5550f4689f159782e1549d, type: 3}
