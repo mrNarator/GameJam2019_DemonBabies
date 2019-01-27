@@ -14,4 +14,9 @@ public class RockPaperScissorsCanvas: MonoBehaviour
     public Image Lose;
     public Image Draw;
 
+	public AudioClip ClickClick;
+	public AudioClip WinAudio;
+	public AudioClip DrawAudio;
+	public AudioClip LooseAudio;
+
 }

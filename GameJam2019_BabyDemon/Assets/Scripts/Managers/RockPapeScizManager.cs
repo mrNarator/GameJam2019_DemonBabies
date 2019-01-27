@@ -183,19 +183,22 @@ public class RockPapeScizManager : MonoBehaviour
 				cumulativeDifficulty = 0f;
 				ScoreManager.Get.AddScore(GetAwardAmount());
 				enemy?.Kill();
+				GlobalSound.Get.PlaySingle(rockPapeScizCanvas.WinAudio);
 				break;
 			case RockPapeScizResult.Loose:
                 //rockPapeScizCanvas.Lose.gameObject.SetActive(true);
                 cumulativeDifficulty = 0f;
 				enemy?.Kill();
 				ScoreManager.Get.RegisterLoseDraw();
-                break;
+				GlobalSound.Get.PlaySingle(rockPapeScizCanvas.LooseAudio);
+				break;
 			case RockPapeScizResult.Draw:
                 //rockPapeScizCanvas.Draw.gameObject.SetActive(true);
                 cumulativeDifficulty += _config.DrawDifficultyStepIncrease;
 				cumulativeDifficulty = Mathf.Clamp(cumulativeDifficulty, 0f, _config.DrawDifficultyMax);
 				StartCoroutine(ResummonFightNextFrame());
-                break;
+				GlobalSound.Get.PlaySingle(rockPapeScizCanvas.DrawAudio);
+				break;
 		}
 		rockPapeScizCanvas.gameObject.SetActive(false);
 		managerIsBusy = false;
@@ -230,6 +233,7 @@ public class RockPapeScizManager : MonoBehaviour
 
 	private void HandleCardSelectionInput()
 	{
+		GlobalSound.Get.PlaySingle(rockPapeScizCanvas.ClickClick);
 		if (Input.GetButtonDown(DB.Const.Controls.RIGHT))
 		{
 			//Debug.Log("moving right" + selectedIndex);
