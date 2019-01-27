@@ -1665,7 +1665,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_TargetDisplay: 0
 --- !u!114 &2875246456281842963
 MonoBehaviour:
@@ -1720,6 +1720,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   score: {fileID: 3116559046144137910}
   hiScrore: {fileID: 7641343763648180991}
+  simpleScoreText: {fileID: 6496514958500987620}
+  hiScoreText: {fileID: 667760470721363038}
   retryButton: {fileID: 1376193558383098070}
   quitButton: {fileID: 4782762812698646106}
 --- !u!1 &5617488713404138828
