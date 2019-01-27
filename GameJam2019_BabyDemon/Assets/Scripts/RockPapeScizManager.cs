@@ -1,4 +1,5 @@
-﻿using DB.EventSystem;
+﻿using DB;
+using DB.EventSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -38,7 +39,7 @@ public class RockPapeScizManager : MonoBehaviour
 	private RockPapeScizState enemyPickedState;
 
 	private BaseConsumable enemy;
-	private PlayerMovement player;
+	private CharacterInteraction player;
 	
 	private void Awake()
 	{

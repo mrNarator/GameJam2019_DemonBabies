@@ -41,7 +41,11 @@ namespace DB
 				// potentionally wrong, as this transform might not be the transform of the hero/char
 				var interactable = interactableInRange.FindClosest(transform.position);
 				UnityEngine.Debug.LogFormat("<color=#0066cc>Start Interaction with: {0}</color>", interactable.name);
-				GlobalEvents.GetEvent<InteractionTrigerredEvent>().Publish(interactable);
+
+				BaseConsumable baseConsumable = interactable.GetComponent <BaseConsumable>();
+				Debug.Log(baseConsumable);
+				GlobalEvents.GetEvent<RockPapeScizEvent>().Publish(RockPapeScizEvent.Args.Make(this, baseConsumable));	
+				//GlobalEvents.GetEvent<InteractionTrigerredEvent>().Publish(interactable);
 			}
 		}
 

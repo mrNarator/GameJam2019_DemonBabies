@@ -11,10 +11,10 @@ namespace DB.EventSystem
 	{
 		public class Args
 		{
-			public PlayerMovement Player;
+			public CharacterInteraction Player;
 			public BaseConsumable Enemy;
 
-			public static Args Make(PlayerMovement player, BaseConsumable baseConsumable )
+			public static Args Make(CharacterInteraction player, BaseConsumable baseConsumable )
 			{
 				return new Args
 				{
