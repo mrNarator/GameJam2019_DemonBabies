@@ -34,7 +34,7 @@ MonoBehaviour:
       BehaviourStepDelay: 4
   GameplaySettings:
     NumberOfLives: 3
-    DrawDifficultyStepIncrease: 0.2
+    DrawDifficultyStepIncrease: 40
     DrawDifficultyMax: 2
   GeneralPrefabs:
     UIStatusPrefab: {fileID: 4231710353304737568, guid: 20353c2fc08c0934a8d13c85148417a9,

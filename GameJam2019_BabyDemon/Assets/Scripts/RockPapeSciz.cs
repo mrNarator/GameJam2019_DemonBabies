@@ -10,21 +10,15 @@ public class RockPapeSciz : MonoBehaviour
 	public Image backGround;
 	public Image Icon;
 
-	private Sprite bgSprite;
-	private Sprite iconSprite;
-
-
 	private void Awake()
 	{
-		bgSprite = backGround.sprite;
-		iconSprite = Icon.sprite;
 	}
 
 	public void SetScriptableObject(RockPapeScizSO obj)
 	{
 		SO = obj;
-		bgSprite = SO.cardBackGroundSprite;
-		iconSprite = SO.icon;
+		backGround.sprite = SO.cardBackGroundSprite;
+		Icon.sprite = SO.icon;
 	}
 
 	public void Select()
