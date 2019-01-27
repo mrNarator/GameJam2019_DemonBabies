@@ -132,6 +132,10 @@ public class PlayerMovement : MonoBehaviour
 		{
 
 			BaseConsumable baseConsumable = collision.collider.GetComponent<BaseConsumable>();
+			if(baseConsumable == null)
+			{
+				return;
+			}
 			GlobalEvents.GetEvent<RockPapeScizEvent>().Publish(RockPapeScizEvent.Args.Make(GetComponentInChildren<CharacterInteraction>(), baseConsumable));
 			GlobalEvents.GetEvent<InteractionTrigerredEvent>().Publish(collision.transform);
 		}
