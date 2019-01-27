@@ -178,21 +178,24 @@ public class RockPapeScizManager : MonoBehaviour
 		switch(result)
 		{
 			case RockPapeScizResult.Win:
-				GlobalEvents.GetEvent<FightFinishedEvent>().Publish();
+                //rockPapeScizCanvas.Win.gameObject.SetActive(true);
+                GlobalEvents.GetEvent<FightFinishedEvent>().Publish();
 				cumulativeDifficulty = 0f;
 				ScoreManager.Get.AddScore(GetAwardAmount());
 				enemy?.Kill();
 				break;
 			case RockPapeScizResult.Loose:
-				cumulativeDifficulty = 0f;
+                //rockPapeScizCanvas.Lose.gameObject.SetActive(true);
+                cumulativeDifficulty = 0f;
 				enemy?.Kill();
 				ScoreManager.Get.RegisterLoseDraw();
-				break;
+                break;
 			case RockPapeScizResult.Draw:
-				cumulativeDifficulty += _config.DrawDifficultyStepIncrease;
+                //rockPapeScizCanvas.Draw.gameObject.SetActive(true);
+                cumulativeDifficulty += _config.DrawDifficultyStepIncrease;
 				cumulativeDifficulty = Mathf.Clamp(cumulativeDifficulty, 0f, _config.DrawDifficultyMax);
 				StartCoroutine(ResummonFightNextFrame());
-				break;
+                break;
 		}
 		rockPapeScizCanvas.gameObject.SetActive(false);
 		managerIsBusy = false;

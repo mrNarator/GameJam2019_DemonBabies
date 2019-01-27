@@ -24,7 +24,7 @@ MonoBehaviour:
   ControlSettings:
     resolveDelayTemp: 3
   FadingSettings:
-    FadeTime: 3
+    FadeTime: 1
     normalColor: {r: 1, g: 1, b: 1, a: 0}
     fadedColor: {r: 0, g: 0, b: 0, a: 1}
   EnemySettings:
@@ -40,7 +40,7 @@ MonoBehaviour:
     NumberOfLives: 3
     DrawDifficultyStepIncrease: 40
     DrawDifficultyMax: 2
-    LifeLostFadedTime: 0
+    LifeLostFadedTime: 2
   GeneralPrefabs:
     UIStatusPrefab: {fileID: 4231710353304737568, guid: 20353c2fc08c0934a8d13c85148417a9,
       type: 3}

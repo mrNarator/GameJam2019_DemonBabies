@@ -18,16 +18,27 @@ namespace DB.UI
 		[SerializeField]
 		private TextMeshProUGUI hiScrore;
 		[SerializeField]
+		private TextMeshProUGUI simpleScoreText;
+		[SerializeField]
+		private TextMeshProUGUI hiScoreText;
+		[SerializeField]
 		private Button retryButton;
 		[SerializeField]
 		private Button quitButton;
 
 		private void Start()
 		{
-			score.text = ScoreManager.Get.Score.ToString();
-			hiScrore.text = ScoreManager.Get.HiScore.ToString();
+			var scoreVal = ScoreManager.Get.Score;
+			var hiScoreVal = ScoreManager.Get.HiScore;
+			score.text = scoreVal.ToString();
+			hiScrore.text = hiScoreVal.ToString();
 			retryButton.onClick.AddListener(RetryLevel);
 			quitButton.onClick.AddListener(QuitGameAndLife);
+
+
+			var newHiScore = scoreVal == hiScoreVal;
+			simpleScoreText.gameObject.SetActive(!newHiScore);
+			hiScoreText.gameObject.SetActive(newHiScore);
 		}
 
 		private void RetryLevel()
