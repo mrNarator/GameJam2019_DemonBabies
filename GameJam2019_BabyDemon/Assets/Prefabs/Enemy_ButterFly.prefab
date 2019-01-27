@@ -147,7 +147,7 @@ MonoBehaviour:
   demonPowerAmount: 2
   throwUpForce: 340
   angularVelocity: 100
-  sliderSpeed: 400
+  sliderSpeed: 200
   partialProportionPaper: 1
   partialProportionRock: 1
   partialProportionScissors: 1

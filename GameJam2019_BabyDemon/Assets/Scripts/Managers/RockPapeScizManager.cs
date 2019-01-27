@@ -199,6 +199,8 @@ public class RockPapeScizManager : MonoBehaviour
 	{
 		playerChosenState = selected.SO.state;
 		enemyPickedState = rpsSlider.ResolveResult();
+		Debug.Log(playerChosenState.ToString() + enemyPickedState.ToString());
+
 		rpsSlider.gameObject.SetActive(false);
 
 		selected = null;

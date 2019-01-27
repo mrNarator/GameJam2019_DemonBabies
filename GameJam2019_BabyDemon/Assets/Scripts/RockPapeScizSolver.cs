@@ -8,19 +8,20 @@ public class RockPapeScizSolver
 {
 	public static RockPapeScizResult solveOutcome(RockPapeScizState who, RockPapeScizState against)
 	{
-		if(who == against)
+		Debug.Log(who.ToString() + against.ToString());
+		if (who == against)
 		{
 			return RockPapeScizResult.Draw;
 		}
-
-		switch(who)
+		Debug.Log(who.ToString() + against.ToString());
+		switch (who)
 		{
 			case RockPapeScizState.Paper:
 				return PaperAgainst(against);
 			case RockPapeScizState.Rock:
-				return PaperAgainst(against);
+				return RockAgainst(against);
 			case RockPapeScizState.Scissors:
-				return PaperAgainst(against);
+				return ScissorsAgainst(against);
 			default:
 				return RockPapeScizResult.Draw;
 		}

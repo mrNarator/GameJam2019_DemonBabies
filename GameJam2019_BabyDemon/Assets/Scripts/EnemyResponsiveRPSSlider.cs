@@ -74,16 +74,17 @@ public class EnemyResponsiveRPSSlider : MonoBehaviour
 
 	public RockPapeScizState ResolveResult()
 	{
-		float percentalValue = Marker.rectTransform.localPosition.x / Background.rectTransform.rect.width;
+		float percentalValue = (Marker.rectTransform.anchoredPosition.x - Marker.rectTransform.rect.width) / (Background.rectTransform.rect.width- Marker.rectTransform.rect.width);
+		Debug.Log(percentalValue);
 		if(percentalValue < rockPercentage)
 		{
 			return RockPapeScizState.Rock;
 		}
-		else if(percentalValue >= rockPercentage && percentalValue < scissorsPercentage)
+		else if(percentalValue >= rockPercentage && percentalValue < scissorsPercentage + rockPercentage)
 		{
 			return RockPapeScizState.Scissors;
 		}
-		else if(percentalValue >= scissorsPercentage && percentalValue<= paperPercentage)
+		else if(percentalValue >= scissorsPercentage + rockPercentage && percentalValue<= scissorsPercentage + rockPercentage + paperPercentage)
 		{
 			return RockPapeScizState.Paper;
 		}
