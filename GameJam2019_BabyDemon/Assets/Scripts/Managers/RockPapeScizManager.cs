@@ -1,5 +1,7 @@
 ﻿using DB;
 using DB.EventSystem;
+using DB.EventSystem.UI;
+using DB.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,13 +11,14 @@ public class RockPapeScizManager : MonoBehaviour
 	public GameObject rockPapeScizCanvasPrefab;
 	public GameObject rockPapeScizCardPrefab;
 
+	private GameObject rockPapeScizCanvas;
+
 	public List<RockPapeScizSO> rockPapeScizSOs = new List<RockPapeScizSO>();
 
 	public List<RockPapeSciz> cardsVisualOptions = new List<RockPapeSciz>();
 	
 
 	public EnemyResponsiveRPSSlider rpsSlider;
-	private RockPaperScissorsCanvas rockPapeScizCanvas;
 
 
 	//public Transform rasedLeftHand;
@@ -49,6 +52,9 @@ public class RockPapeScizManager : MonoBehaviour
 		GlobalEvents.GetEvent<RockPapeScizEvent>().Subscribe(HandleRockPapeSciz);
 		rockPapeScizCanvasPrefab.SetActive(false);
 		_config = Settings.Get.GameplaySettings;
+
+		GlobalEvents.GetEvent<GameLostEvent>().Subscribe(OnGameLost);
+		GlobalEvents.GetEvent<LifeChangedEvent>().Subscribe(OnLifeChanged);
 	}
 
 	private void OnDestroy()
@@ -69,6 +75,24 @@ public class RockPapeScizManager : MonoBehaviour
 		}
     }
 
+	private void OnGameLost(GameLostEvent.Args args)
+	{
+		// show lost UI;
+	}
+
+	private void OnLifeChanged(LifeChangedEvent.Args args)
+	{
+		BlankingTransitionUI.Get.ShowFade(() => StartCoroutine(LifeChangedFadedTime()));
+	}
+
+	IEnumerator LifeChangedFadedTime()
+	{
+		Debug.LogFormat("starting 3 secod timer");
+		yield return new WaitForSeconds(_config.LifeLostFadedTime);
+		BlankingTransitionUI.Get.HideFade(() =>
+				GlobalEvents.GetEvent<FightFinishedEvent>().Publish());
+	}
+
 	private void HandleRockPapeSciz(RockPapeScizEvent.Args args)
 	{
 		if(managerIsBusy)
@@ -78,23 +102,15 @@ public class RockPapeScizManager : MonoBehaviour
 
 		if(rockPapeScizCanvas == null)
 		{
-			rockPapeScizCanvas = Instantiate(rockPapeScizCanvasPrefab).GetComponent<RockPaperScissorsCanvas>();
+			rockPapeScizCanvas = Instantiate(rockPapeScizCanvasPrefab);
 			rpsSlider = rockPapeScizCanvas.GetComponentInChildren<EnemyResponsiveRPSSlider>();
 		}
-		rockPapeScizCanvas.gameObject.SetActive(true);
-		//rockPapeScizCanvas.GetComponent<Canvas>().worldCamera = mainCamera;
+		rockPapeScizCanvas.SetActive(true);
+		rockPapeScizCanvas.GetComponent<Canvas>().worldCamera = mainCamera;
 
 		enemy = args.Enemy;
 		player = args.Player;
 		managerIsBusy = true;
-
-		SpriteRenderer enemyRenderer = enemy.GetComponent<SpriteRenderer>();
-		if(enemyRenderer == null)
-		{
-			enemyRenderer = enemy.GetComponentInChildren<SpriteRenderer>();
-		}
-		rockPapeScizCanvas.enemyImage.sprite = enemyRenderer.sprite;
-		rockPapeScizCanvas.enemyImage.preserveAspect = true;
 
 		StartCoroutine(ShowOptionCards());	
 	}
@@ -108,16 +124,16 @@ public class RockPapeScizManager : MonoBehaviour
 
 		float screenWidth = CanvasRect.rect.width;
 		float screenHeight = CanvasRect.rect.height;
-		float offsetX = screenWidth *2/3 / (size);
+		float offsetX = screenWidth /(size + 1);
 		float offsetY = screenHeight / 2;
 
 
-		Vector2 prevPosition = new Vector2(0, offsetY) ;
+		Vector2 prevPosition = new Vector2(offsetX, offsetY) ;
 		foreach(var item in rockPapeScizSOs)
 		{
 			GameObject temp = GameObject.Instantiate(rockPapeScizCardPrefab, rockPapeScizCanvas.transform);
 			StartCoroutine(SetPositionForRect(temp, new Vector2(prevPosition.x, prevPosition.y)));
-			RockPapeSciz option = temp.GetComponent<RockPapeSciz>();
+			RockPapeSciz option =temp.GetComponent<RockPapeSciz>();
 			option.SetScriptableObject(item);
 			cardsVisualOptions.Add(option);
 			prevPosition = new Vector2(prevPosition.x + offsetX, offsetY);
@@ -148,17 +164,18 @@ public class RockPapeScizManager : MonoBehaviour
 	{
 		handlingFinalResult = false;
 		var result = RockPapeScizSolver.solveOutcome(playerChosenState, enemyPickedState);
-		GlobalEvents.GetEvent<FightFinishedEvent>().Publish();
 		Debug.LogFormat("resolve result: {0}", result.ToString());
 		switch(result)
 		{
 			case RockPapeScizResult.Win:
+				GlobalEvents.GetEvent<FightFinishedEvent>().Publish();
 				cumulativeDifficulty = 0f;
-				ScoreManager.Get.AddScore();
-				enemy.Kill();
+				ScoreManager.Get.AddScore(GetAwardAmount());
+				enemy?.Kill();
 				break;
 			case RockPapeScizResult.Loose:
 				cumulativeDifficulty = 0f;
+				enemy?.Kill();
 				ScoreManager.Get.RegisterLoseDraw();
 				break;
 			case RockPapeScizResult.Draw:
@@ -167,7 +184,7 @@ public class RockPapeScizManager : MonoBehaviour
 				StartCoroutine(ResummonFightNextFrame());
 				break;
 		}
-		rockPapeScizCanvas.gameObject.SetActive(false);
+		Destroy(rockPapeScizCanvas);
 		managerIsBusy = false;
 	}
 
@@ -175,6 +192,27 @@ public class RockPapeScizManager : MonoBehaviour
 	{
 		yield return null;
 		HandleRockPapeSciz(RockPapeScizEvent.Args.Make(player, enemy));
+	}
+
+	private int GetAwardAmount()
+	{
+		var result = enemy.demonPowerAmount;
+		float selectedPercentage = 0f;
+		switch (enemyPickedState)
+		{
+			case RockPapeScizState.Paper:
+				selectedPercentage = rpsSlider.paperPercentage;
+				break;
+			case RockPapeScizState.Rock:
+				selectedPercentage = rpsSlider.rockPercentage;
+				break;
+			case RockPapeScizState.Scissors:
+				selectedPercentage = rpsSlider.scissorsPercentage;
+				break;
+		}
+		// assuming there should be sign as wide as 60 percent
+		result += Mathf.FloorToInt((100f - selectedPercentage) / 10f) - 4;
+		return result;
 	}
 
 	private void HandleCardSelectionInput()
@@ -199,6 +237,8 @@ public class RockPapeScizManager : MonoBehaviour
 	{
 		playerChosenState = selected.SO.state;
 		enemyPickedState = rpsSlider.ResolveResult();
+		Debug.Log(playerChosenState.ToString() + enemyPickedState.ToString());
+
 		rpsSlider.gameObject.SetActive(false);
 
 		selected = null;
