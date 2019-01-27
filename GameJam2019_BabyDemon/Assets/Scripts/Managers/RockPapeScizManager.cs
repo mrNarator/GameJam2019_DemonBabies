@@ -68,6 +68,11 @@ public class RockPapeScizManager : MonoBehaviour
 
 	private void HandleRockPapeSciz(RockPapeScizEvent.Args args)
 	{
+		if(managerIsBusy)
+		{
+			return;
+		}
+
 		if(rockPapeScizCanvas == null)
 		{
 			rockPapeScizCanvas = Instantiate(rockPapeScizCanvasPrefab);
@@ -132,32 +137,44 @@ public class RockPapeScizManager : MonoBehaviour
 	{
 		handlingFinalResult = false;
 		var result = RockPapeScizSolver.solveOutcome(playerChosenState, enemyPickedState);
-		GlobalEvents.GetEvent<FightFInishedEvent>().Publish();
-		if(result == RockPapeScizResult.Win)
-		{
-			ScoreManager.Get.AddScore();
-			enemy.Kill();
-		}
-		else
-		{
-			ScoreManager.Get.RegisterLoseDraw();
-		}
+		GlobalEvents.GetEvent<FightFinishedEvent>().Publish();
 		Debug.LogFormat("resolve rersult: {0}", result.ToString());
+		switch(result)
+		{
+			case RockPapeScizResult.Win:
+				ScoreManager.Get.AddScore();
+				enemy.Kill();
+				break;
+			case RockPapeScizResult.Loose:
+				ScoreManager.Get.RegisterLoseDraw();
+				break;
+			case RockPapeScizResult.Draw:
+				StartCoroutine(ResummonFightNextFrame());
+				break;
+		}
+		Destroy(rockPapeScizCanvas);
+		managerIsBusy = false;
+	}
+
+	IEnumerator ResummonFightNextFrame()
+	{
+		yield return null;
+		HandleRockPapeSciz(RockPapeScizEvent.Args.Make(player, enemy));
 	}
 
 	private void HandleCardSelectionInput()
 	{
-		if(Input.GetButtonDown(DB.Const.Controls.RIGHT))
+		if (Input.GetButtonDown(DB.Const.Controls.RIGHT))
 		{
 			//Debug.Log("moving right" + selectedIndex);
 			MoveSelectionRight();
 		}
-		if(Input.GetButtonDown(DB.Const.Controls.LEFT))
+		if (Input.GetButtonDown(DB.Const.Controls.LEFT))
 		{
 			//Debug.Log("moving left" + selectedIndex);
 			MoveSelectionLeft();
 		}
-		if(Input.GetButtonDown(DB.Const.Controls.SUBMIT))
+		if (Input.GetButtonDown(DB.Const.Controls.SUBMIT))
 		{
 			SubmitSelection();
 		}
@@ -175,6 +192,7 @@ public class RockPapeScizManager : MonoBehaviour
 		{
 			Destroy(item.gameObject);
 		}
+		cardsVisualOptions.Clear();
 		handlingCardSelection = false;
 		handlingFinalResult = true;
 	}

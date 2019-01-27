@@ -15,8 +15,8 @@ MonoBehaviour:
   PlayerMovementSettings:
     moveForce: 1000
     velocityLimit: 3000
-    moveDampening: 0.099
-    jumpVelocity: 1500
+    moveDampening: 0.148
+    jumpVelocity: 1000
   InteractionSettings:
     InteractionRange: 100
     InteractionWidth: 70
