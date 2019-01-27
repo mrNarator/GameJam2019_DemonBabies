@@ -13,7 +13,7 @@ public class RockPapeScizManager : MonoBehaviour
 
 	private RockPaperScissorsCanvas rockPapeScizCanvas;
 
-	public List<RockPapeScizSO> rockPapeScizSOs = new List<RockPapeScizSO>();
+	//public List<RockPapeScizSO> rockPapeScizSOs = new List<RockPapeScizSO>();
 
 	public List<RockPapeSciz> cardsVisualOptions = new List<RockPapeSciz>();
 	
@@ -118,6 +118,8 @@ public class RockPapeScizManager : MonoBehaviour
 			enemySpriteRenderer = enemy.GetComponentInChildren<SpriteRenderer>();
 		}
 
+		cardsVisualOptions = rockPapeScizCanvas.cardsVisualOptions;
+
 		rockPapeScizCanvas.enemyImage.sprite = enemySpriteRenderer.sprite;
 
 		StartCoroutine(ShowOptionCards());	
@@ -126,26 +128,26 @@ public class RockPapeScizManager : MonoBehaviour
 	IEnumerator ShowOptionCards()
 	{
 		yield return null;
-		int size = rockPapeScizSOs.Count;
+		//int size = rockPapeScizSOs.Count;
 
-		RectTransform CanvasRect = rockPapeScizCanvas.GetComponent<RectTransform>();
+		//RectTransform CanvasRect = rockPapeScizCanvas.GetComponent<RectTransform>();
 
-		float screenWidth = CanvasRect.rect.width;
-		float screenHeight = CanvasRect.rect.height;
-		float offsetX = screenWidth /(size + 1);
-		float offsetY = screenHeight / 2;
+		//float screenWidth = CanvasRect.rect.width;
+		//float screenHeight = CanvasRect.rect.height;
+		//float offsetX = screenWidth /(size + 1);
+		//float offsetY = screenHeight / 2;
 
 
-		Vector2 prevPosition = new Vector2(offsetX, offsetY) ;
-		foreach(var item in rockPapeScizSOs)
-		{
-			GameObject temp = GameObject.Instantiate(rockPapeScizCardPrefab, rockPapeScizCanvas.transform);
-			StartCoroutine(SetPositionForRect(temp, new Vector2(prevPosition.x, prevPosition.y)));
-			RockPapeSciz option =temp.GetComponent<RockPapeSciz>();
-			option.SetScriptableObject(item);
-			cardsVisualOptions.Add(option);
-			prevPosition = new Vector2(prevPosition.x + offsetX, offsetY);
-		}
+		//Vector2 prevPosition = new Vector2(offsetX, offsetY) ;
+		//foreach(var item in rockPapeScizSOs)
+		//{
+		//	GameObject temp = GameObject.Instantiate(rockPapeScizCardPrefab, rockPapeScizCanvas.transform);
+		//	StartCoroutine(SetPositionForRect(temp, new Vector2(prevPosition.x, prevPosition.y)));
+		//	RockPapeSciz option =temp.GetComponent<RockPapeSciz>();
+		//	option.SetScriptableObject(item);
+		//	cardsVisualOptions.Add(option);
+		//	prevPosition = new Vector2(prevPosition.x + offsetX, offsetY);
+		//}
 
 		rpsSlider.gameObject.SetActive(true);
 		rpsSlider.SetUpSlider(enemy, cumulativeDifficulty);
@@ -249,38 +251,48 @@ public class RockPapeScizManager : MonoBehaviour
 
 		rpsSlider.gameObject.SetActive(false);
 
+		selected .Deselect();
 		selected = null;
 		selectedIndex = 0;
-		foreach(var item in cardsVisualOptions)
-		{
-			Destroy(item.gameObject);
-		}
-		cardsVisualOptions.Clear();
+
 		handlingCardSelection = false;
 		handlingFinalResult = true;
 	}
 
-	private void MoveSelectionRight()
+	private void MoveSelectionLeft()
 	{
 		if(selectedIndex >= cardsVisualOptions.Count-1)
 		{
-			return;
+			selected.Deselect();
+			selectedIndex = 0;
+			selected = cardsVisualOptions[selectedIndex];
+			selected.Select();
 		}
-		selected.Deselect();
-		selectedIndex += 1;				
-		selected = cardsVisualOptions[selectedIndex];
-		selected.Select();
+		else
+		{
+			selected.Deselect();
+			selectedIndex += 1;
+			selected = cardsVisualOptions[selectedIndex];
+			selected.Select();
+		}
 	}
 	
-	private void MoveSelectionLeft()
+	private void MoveSelectionRight()
 	{
 		if (selectedIndex <= 0 )
 		{
-			return;
+			selected.Deselect();
+			selectedIndex = cardsVisualOptions.Count - 1;
+			selected = cardsVisualOptions[selectedIndex];
+			selected.Select();
 		}
-		selected.Deselect();
-		selectedIndex -= 1;
-		selected = cardsVisualOptions[selectedIndex];
-		selected.Select();
+		else
+		{
+			selected.Deselect();
+			selectedIndex -= 1;
+			selected = cardsVisualOptions[selectedIndex];
+			selected.Select();
+		}
+		
 	}
 }

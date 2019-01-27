@@ -9,4 +9,5 @@ using UnityEngine.UI;
 public class RockPaperScissorsCanvas: MonoBehaviour
 {
 	public Image enemyImage;
+	public List<RockPapeSciz> cardsVisualOptions = new List<RockPapeSciz>();
 }

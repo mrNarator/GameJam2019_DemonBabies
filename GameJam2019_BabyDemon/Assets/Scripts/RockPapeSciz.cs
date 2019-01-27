@@ -12,6 +12,10 @@ public class RockPapeSciz : MonoBehaviour
 
 	private void Awake()
 	{
+		if(SO !=null)
+		{
+			SetScriptableObject(SO);
+		}
 	}
 
 	public void SetScriptableObject(RockPapeScizSO obj)
