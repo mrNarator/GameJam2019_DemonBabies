@@ -32,7 +32,7 @@ namespace DB
 			yield return new WaitForSeconds(_config.resolveDelayTemp);
 
 			UnityEngine.Debug.LogFormat("<color=#006622>fight \"ended\"</color>");
-			GlobalEvents.GetEvent<FightFInishedEvent>().Publish();
+			GlobalEvents.GetEvent<FightFinishedEvent>().Publish();
 		}
 
 		[Serializable]

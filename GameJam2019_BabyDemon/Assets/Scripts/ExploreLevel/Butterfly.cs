@@ -15,14 +15,14 @@ public class Butterfly : BaseConsumable
 	{
 		base.Awake();
 		GlobalEvents.GetEvent<InteractionTrigerredEvent>().Subscribe(OnInteractionStarted);
-		GlobalEvents.GetEvent<FightFInishedEvent>().Subscribe(OnFightEnded);
+		GlobalEvents.GetEvent<FightFinishedEvent>().Subscribe(OnFightEnded);
 	}
 
 	protected override void OnDestroy()
 	{
 		base.OnDestroy();
 		GlobalEvents.GetEvent<InteractionTrigerredEvent>().UnSubscribe(OnInteractionStarted);
-		GlobalEvents.GetEvent<FightFInishedEvent>().UnSubscribe(OnFightEnded);
+		GlobalEvents.GetEvent<FightFinishedEvent>().UnSubscribe(OnFightEnded);
 	}
 
 	private void OnInteractionStarted(Transform withWhat)

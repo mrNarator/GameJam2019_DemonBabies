@@ -24,12 +24,12 @@ namespace DB
 		private void Start()
 		{
 			interactableInRange = new List<Transform>();
-			GlobalEvents.GetEvent<FightFInishedEvent>().Subscribe(OnFightFinished);
+			GlobalEvents.GetEvent<FightFinishedEvent>().Subscribe(OnFightFinished);
 		}
 
 		private void OnDestroy()
 		{
-			GlobalEvents.GetEvent<FightFInishedEvent>().UnSubscribe(OnFightFinished);
+			GlobalEvents.GetEvent<FightFinishedEvent>().UnSubscribe(OnFightFinished);
 		}
 
 		private void Update()

@@ -21,13 +21,13 @@ namespace DB.Enemy
 			_config = Settings.Get.EnemySettings.Movement;
 			_rigidBody = GetComponent<Rigidbody2D>();
 			GlobalEvents.GetEvent<InteractionTrigerredEvent>().Subscribe(OnInteractionStarted);
-			GlobalEvents.GetEvent<FightFInishedEvent>().Subscribe(OnFightEnded);
+			GlobalEvents.GetEvent<FightFinishedEvent>().Subscribe(OnFightEnded);
 		}
 
 		private void OnDestroy()
 		{
 			GlobalEvents.GetEvent<InteractionTrigerredEvent>().Subscribe(OnInteractionStarted);
-			GlobalEvents.GetEvent<FightFInishedEvent>().Subscribe(OnFightEnded);
+			GlobalEvents.GetEvent<FightFinishedEvent>().Subscribe(OnFightEnded);
 		}
 
 		private void OnInteractionStarted(Transform withWhat)

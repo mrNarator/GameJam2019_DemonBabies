@@ -22,12 +22,12 @@ public class PlayerMovement : MonoBehaviour
 		_config = Settings.Get.PlayerMovementSettings;
 		GlobalEvents.GetEvent<CameraFollowEvent>().Publish(transform);
 		GlobalEvents.GetEvent<InteractionTrigerredEvent>().Subscribe(OnInteractionTrigerred);
-		GlobalEvents.GetEvent<FightFInishedEvent>().Subscribe(OnFightFinished);
+		GlobalEvents.GetEvent<FightFinishedEvent>().Subscribe(OnFightFinished);
 	}
 
 	private void OnDestroy()
 	{
-		GlobalEvents.GetEvent<FightFInishedEvent>().Subscribe(OnFightFinished);
+		GlobalEvents.GetEvent<FightFinishedEvent>().Subscribe(OnFightFinished);
 		GlobalEvents.GetEvent<InteractionTrigerredEvent>().Subscribe(OnInteractionTrigerred);
 		GlobalEvents.GetEvent<CameraFollowEvent>().Publish(null);
 	}

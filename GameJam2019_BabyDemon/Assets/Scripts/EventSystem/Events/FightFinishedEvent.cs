@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace DB.EventSystem
 {
-	public class FightFInishedEvent : EventBase
+	public class FightFinishedEvent : EventBase
 	{
 
 	}
