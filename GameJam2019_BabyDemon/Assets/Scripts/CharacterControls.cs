@@ -22,17 +22,7 @@ namespace DB
 
 		private void OnInteractionStarted(Transform interactWith)
 		{
-			StartCoroutine(DelayInteractionResolveCo());
-		}
 
-		IEnumerator DelayInteractionResolveCo()
-		{
-
-			UnityEngine.Debug.LogFormat("<color=#44ffcc>Starting Fight</color>");
-			yield return new WaitForSeconds(_config.resolveDelayTemp);
-
-			UnityEngine.Debug.LogFormat("<color=#006622>fight \"ended\"</color>");
-			GlobalEvents.GetEvent<FightFinishedEvent>().Publish();
 		}
 
 		[Serializable]

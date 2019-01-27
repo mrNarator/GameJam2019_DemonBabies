@@ -1,4 +1,5 @@
-﻿using DB.EventSystem;
+﻿using DB;
+using DB.EventSystem;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -126,6 +127,14 @@ public class PlayerMovement : MonoBehaviour
 	private void OnCollisionEnter2D(Collision2D collision)
 	{
 		IsGrounded = true;
+		
+		if(collision.collider.gameObject.layer == LayerMask.NameToLayer(DB.Const.Layers.InteractionReceiver))
+		{
+
+			BaseConsumable baseConsumable = collision.collider.GetComponent<BaseConsumable>();
+			GlobalEvents.GetEvent<RockPapeScizEvent>().Publish(RockPapeScizEvent.Args.Make(GetComponentInChildren<CharacterInteraction>(), baseConsumable));
+			GlobalEvents.GetEvent<InteractionTrigerredEvent>().Publish(collision.transform);
+		}
 	}
 
 	private void OnFightFinished()

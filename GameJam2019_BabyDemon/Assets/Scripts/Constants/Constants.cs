@@ -28,5 +28,12 @@ namespace DB
 			public const int MainMenu = 0;
 			public const int MainLevel = 1;
 		}
+
+		// please generate this auto in productino if actually needed in game
+		public static class Layers
+		{
+			public const string InteractionSearcher = "InteractionSearcher";
+			public const string InteractionReceiver = "InteractionReceiver";
+		}
 	}
 }
