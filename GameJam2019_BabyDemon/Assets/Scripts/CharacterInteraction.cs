@@ -15,6 +15,8 @@ namespace DB
 
 		private Config _config;
 
+
+		//private Animator anim;
 		private void Awake()
 		{
 			_config = Settings.Get.InteractionSettings;
@@ -23,6 +25,7 @@ namespace DB
 
 		private void Start()
 		{
+			//anim = gameObject.GetComponentInParent<Animator>();
 			interactableInRange = new List<Transform>();
 			GlobalEvents.GetEvent<FightFinishedEvent>().Subscribe(OnFightFinished);
 		}
@@ -34,23 +37,27 @@ namespace DB
 
 		private void Update()
 		{
-			if(Input.GetButtonDown(DB.Const.Controls.INTERACTION) && !Interacting && InRange)
+			if(Input.GetButtonDown(DB.Const.Controls.INTERACTION))
 			{
-
-				Interacting = true;
-				// potentionally wrong, as this transform might not be the transform of the hero/char
-				var interactable = interactableInRange.FindClosest(transform.position);
-				UnityEngine.Debug.LogFormat("<color=#0066cc>Start Interaction with: {0}</color>", interactable.name);
-
-				BaseConsumable baseConsumable = interactable.GetComponent <BaseConsumable>();
-				if(baseConsumable.state.isDead)
+				//anim.SetTrigger(Const.PlayerAnimations.Attacking);
+				if (!Interacting && InRange)
 				{
-					interactableInRange.Remove(interactable);
+					Interacting = true;
+					// potentionally wrong, as this transform might not be the transform of the hero/char
+					var interactable = interactableInRange.FindClosest(transform.position);
+					UnityEngine.Debug.LogFormat("<color=#0066cc>Start Interaction with: {0}</color>", interactable.name);
+
+					BaseConsumable baseConsumable = interactable.GetComponent<BaseConsumable>();
+					if (baseConsumable.state.isDead)
+					{
+						interactableInRange.Remove(interactable);
+					}
+					Debug.Log(baseConsumable);
+					GlobalEvents.GetEvent<RockPapeScizEvent>().Publish(RockPapeScizEvent.Args.Make(this, baseConsumable));
+					GlobalEvents.GetEvent<InteractionTrigerredEvent>().Publish(interactable);
 				}
-				Debug.Log(baseConsumable);
-				GlobalEvents.GetEvent<RockPapeScizEvent>().Publish(RockPapeScizEvent.Args.Make(this, baseConsumable));	
-				GlobalEvents.GetEvent<InteractionTrigerredEvent>().Publish(interactable);
 			}
+		
 		}
 
 		private void OnFightFinished()
@@ -62,6 +69,10 @@ namespace DB
 
 		private void OnTriggerEnter2D(Collider2D collision)
 		{
+			if(collision.gameObject.GetComponent<BaseConsumable>()==null)
+			{
+				return;
+			}
 			if(collision.gameObject.GetComponent<BaseConsumable>().state.isDead)
 			{
 				return;

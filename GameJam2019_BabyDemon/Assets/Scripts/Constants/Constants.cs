@@ -35,5 +35,9 @@ namespace DB
 			public const string InteractionSearcher = "InteractionSearcher";
 			public const string InteractionReceiver = "InteractionReceiver";
 		}
+		public static class PlayerAnimations
+		{
+			public const string Attacking = "Attacking";
+		}
 	}
 }
