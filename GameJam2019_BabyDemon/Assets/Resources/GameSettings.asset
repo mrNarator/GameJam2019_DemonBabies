@@ -32,3 +32,8 @@ MonoBehaviour:
       HorizontalTargetingVal: 1
       VerticalTargettingVal: 0.3
       BehaviourStepDelay: 4
+  GameplaySettings:
+    NumberOfLives: 3
+  GeneralPrefabs:
+    UIStatusPrefab: {fileID: 4231710353304737568, guid: 20353c2fc08c0934a8d13c85148417a9,
+      type: 3}
