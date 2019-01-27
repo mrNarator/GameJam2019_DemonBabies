@@ -145,8 +145,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   demonPowerAmount: 2
-  throwUpForce: 10
-  angularVelocity: 2
+  throwUpForce: 340
+  angularVelocity: 100
   sliderSpeed: 400
   partialProportionPaper: 1
   partialProportionRock: 1

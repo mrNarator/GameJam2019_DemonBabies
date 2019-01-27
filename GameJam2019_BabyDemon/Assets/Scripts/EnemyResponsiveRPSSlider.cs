@@ -14,6 +14,10 @@ public class EnemyResponsiveRPSSlider : MonoBehaviour
 	public Image Background;
 	public Image Marker;
 
+	public GameObject rockIconHolder;
+	public GameObject scissorsIconHolder;
+	public GameObject paperIconHolder;
+
 	private float rockPercentage;
 	private float scissorsPercentage;
 	private float paperPercentage;
@@ -45,6 +49,7 @@ public class EnemyResponsiveRPSSlider : MonoBehaviour
 		referencedObject = baseConsumable;
 		ResolvePercentages();
 		UpdateFillAmounts();
+		SetIconHoldersPositions();
 		setUp = true;
 		extraSliderIncrease += extraIncrease;
 	}
@@ -94,6 +99,19 @@ public class EnemyResponsiveRPSSlider : MonoBehaviour
 		ScissorsPivot.fillAmount = rockPercentage + scissorsPercentage;
 		PaperPivot.fillAmount = rockPercentage + scissorsPercentage + paperPercentage;
 	}
+	private void SetIconHoldersPositions()
+	{
+		RectTransform rockRect = rockIconHolder.GetComponent<RectTransform>();
+		rockRect.anchoredPosition = 
+			new Vector2 (Background.rectTransform.rect.width * (RockPivot.fillAmount - (rockPercentage/2))
+			, rockRect.anchoredPosition.y);
+		RectTransform scissorsRect = scissorsIconHolder.GetComponent<RectTransform>();
+		scissorsRect.anchoredPosition = new Vector2(Background.rectTransform.rect.width * (ScissorsPivot.fillAmount - (scissorsPercentage/2))
+			, scissorsRect.anchoredPosition.y);
+		RectTransform paperRect = paperIconHolder.GetComponent<RectTransform>();
+		paperRect.anchoredPosition = new Vector2(Background.rectTransform.rect.width * (PaperPivot.fillAmount - (paperPercentage / 2)),
+			paperRect.anchoredPosition.y);
+	}
 
 	private void ResolvePercentages()
 	{
@@ -105,8 +123,5 @@ public class EnemyResponsiveRPSSlider : MonoBehaviour
 		paperPercentage = referencedObject.partialProportionPaper / sumOfPartials;
 		scissorsPercentage = referencedObject.partialProportionScissors / sumOfPartials;
 	}
-	
-
-
 }
 

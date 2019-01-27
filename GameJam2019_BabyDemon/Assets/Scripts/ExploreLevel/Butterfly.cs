@@ -40,6 +40,13 @@ public class Butterfly : BaseConsumable
 		base.Start();
 		StartCoroutine(movementPatter());
 	}
+
+	public override void Kill()
+	{
+		base.Kill();
+		_rigibody.gravityScale = 10;
+		StopAllCoroutines();
+	}
 	
 	Vector2 ResetTarget()
 	{

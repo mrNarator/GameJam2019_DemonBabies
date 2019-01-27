@@ -43,9 +43,13 @@ namespace DB
 				UnityEngine.Debug.LogFormat("<color=#0066cc>Start Interaction with: {0}</color>", interactable.name);
 
 				BaseConsumable baseConsumable = interactable.GetComponent <BaseConsumable>();
+				if(baseConsumable.state.isDead)
+				{
+					interactableInRange.Remove(interactable);
+				}
 				Debug.Log(baseConsumable);
 				GlobalEvents.GetEvent<RockPapeScizEvent>().Publish(RockPapeScizEvent.Args.Make(this, baseConsumable));	
-				//GlobalEvents.GetEvent<InteractionTrigerredEvent>().Publish(interactable);
+				GlobalEvents.GetEvent<InteractionTrigerredEvent>().Publish(interactable);
 			}
 		}
 

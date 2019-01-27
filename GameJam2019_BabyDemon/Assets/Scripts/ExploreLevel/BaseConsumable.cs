@@ -49,6 +49,7 @@ public class BaseConsumable : MonoBehaviour
 	{
 		GlobalSound.Get.PlaySingle(killSound);
 		state.isDead = true;
+		Consume();
 	}
 
 	public virtual void Consume()
@@ -58,11 +59,10 @@ public class BaseConsumable : MonoBehaviour
 			return;
 		}
 
-		_rigibody.AddForce(new Vector2(0, throwUpForce));
+		_rigibody.AddForce(new Vector2(0, throwUpForce), ForceMode2D.Impulse);
 		_rigibody.angularVelocity = angularVelocity;
 
 		Destroy(gameObject, 4);
-		GlobalEvents.GetEvent<DemonPowerConsumedEvent>().Publish(DemonPowerConsumedEvent.Args.Make(demonPowerAmount));
 	}
 
 	[System.Serializable]
