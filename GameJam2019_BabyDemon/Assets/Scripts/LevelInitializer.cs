@@ -32,6 +32,9 @@ namespace DB
 
 			Instantiate(Settings.Get.GeneralPrefabs.UIStatusPrefab);
 
+			var UImanager = new GameObject("tempUIManager");
+			UImanager.AddComponent<UIManager>();
+
 			GlobalEvents.GetEvent<LevelSetupEvent>().Publish();
 		}
 

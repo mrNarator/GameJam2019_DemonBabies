@@ -56,11 +56,12 @@ namespace DB.UI
 			var startColor = Overlay.color;
 			var tPassed = (Time.time - starttime) / time;
 
-			UnityEngine.Debug.LogFormat("<color=#0066cc>start fading: {0} </color>", startColor);
+			UnityEngine.Debug.LogFormat("<color=#0066cc>start fading: {0} passed: {1} </color>", startColor, tPassed);
 			while(tPassed < 1f)
 			{
 				yield return null;
 				Overlay.color = Color.Lerp(startColor, toColor, tPassed);
+				tPassed = (Time.time - starttime) / time;
 			}
 			yield return null;
 			Overlay.color = toColor;

@@ -11,13 +11,14 @@ public class RockPapeScizManager : MonoBehaviour
 	public GameObject rockPapeScizCanvasPrefab;
 	public GameObject rockPapeScizCardPrefab;
 
+	private GameObject rockPapeScizCanvas;
+
 	public List<RockPapeScizSO> rockPapeScizSOs = new List<RockPapeScizSO>();
 
 	public List<RockPapeSciz> cardsVisualOptions = new List<RockPapeSciz>();
 	
 
 	public EnemyResponsiveRPSSlider rpsSlider;
-	private RockPaperScissorsCanvas rockPapeScizCanvas;
 
 
 	//public Transform rasedLeftHand;
@@ -86,6 +87,7 @@ public class RockPapeScizManager : MonoBehaviour
 
 	IEnumerator LifeChangedFadedTime()
 	{
+		Debug.LogFormat("starting 3 secod timer");
 		yield return new WaitForSeconds(_config.LifeLostFadedTime);
 		BlankingTransitionUI.Get.HideFade(() =>
 				GlobalEvents.GetEvent<FightFinishedEvent>().Publish());
@@ -100,23 +102,15 @@ public class RockPapeScizManager : MonoBehaviour
 
 		if(rockPapeScizCanvas == null)
 		{
-			rockPapeScizCanvas = Instantiate(rockPapeScizCanvasPrefab).GetComponent<RockPaperScissorsCanvas>();
+			rockPapeScizCanvas = Instantiate(rockPapeScizCanvasPrefab);
 			rpsSlider = rockPapeScizCanvas.GetComponentInChildren<EnemyResponsiveRPSSlider>();
 		}
-		rockPapeScizCanvas.gameObject.SetActive(true);
-		//rockPapeScizCanvas.GetComponent<Canvas>().worldCamera = mainCamera;
+		rockPapeScizCanvas.SetActive(true);
+		rockPapeScizCanvas.GetComponent<Canvas>().worldCamera = mainCamera;
 
 		enemy = args.Enemy;
 		player = args.Player;
 		managerIsBusy = true;
-
-		SpriteRenderer enemyRenderer = enemy.GetComponent<SpriteRenderer>();
-		if(enemyRenderer == null)
-		{
-			enemyRenderer = enemy.GetComponentInChildren<SpriteRenderer>();
-		}
-		rockPapeScizCanvas.enemyImage.sprite = enemyRenderer.sprite;
-		rockPapeScizCanvas.enemyImage.preserveAspect = true;
 
 		StartCoroutine(ShowOptionCards());	
 	}
@@ -130,16 +124,16 @@ public class RockPapeScizManager : MonoBehaviour
 
 		float screenWidth = CanvasRect.rect.width;
 		float screenHeight = CanvasRect.rect.height;
-		float offsetX = screenWidth *2/3 / (size);
+		float offsetX = screenWidth /(size + 1);
 		float offsetY = screenHeight / 2;
 
 
-		Vector2 prevPosition = new Vector2(0, offsetY) ;
+		Vector2 prevPosition = new Vector2(offsetX, offsetY) ;
 		foreach(var item in rockPapeScizSOs)
 		{
 			GameObject temp = GameObject.Instantiate(rockPapeScizCardPrefab, rockPapeScizCanvas.transform);
 			StartCoroutine(SetPositionForRect(temp, new Vector2(prevPosition.x, prevPosition.y)));
-			RockPapeSciz option = temp.GetComponent<RockPapeSciz>();
+			RockPapeSciz option =temp.GetComponent<RockPapeSciz>();
 			option.SetScriptableObject(item);
 			cardsVisualOptions.Add(option);
 			prevPosition = new Vector2(prevPosition.x + offsetX, offsetY);
@@ -190,7 +184,7 @@ public class RockPapeScizManager : MonoBehaviour
 				StartCoroutine(ResummonFightNextFrame());
 				break;
 		}
-		rockPapeScizCanvas.gameObject.SetActive(false);
+		Destroy(rockPapeScizCanvas);
 		managerIsBusy = false;
 	}
 
