@@ -19,6 +19,8 @@ public class Settings : ScriptableObject
 	public class GameplayConfig
 	{
 		public int NumberOfLives;
+		public float DrawDifficultyStepIncrease;
+		public float DrawDifficultyMax;
 	}
 
 	[System.Serializable]

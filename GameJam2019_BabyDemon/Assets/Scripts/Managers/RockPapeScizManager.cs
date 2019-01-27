@@ -40,12 +40,16 @@ public class RockPapeScizManager : MonoBehaviour
 
 	private BaseConsumable enemy;
 	private CharacterInteraction player;
+
+	Settings.GameplayConfig _config;
+	private float cumulativeDifficulty;
 	
 	private void Awake()
 	{
 		mainCamera = Camera.main;
 		GlobalEvents.GetEvent<RockPapeScizEvent>().Subscribe(HandleRockPapeSciz);
 		rockPapeScizCanvasPrefab.SetActive(false);
+		_config = Settings.Get.GameplaySettings;
 	}
 
 	private void OnDestroy()
@@ -113,7 +117,7 @@ public class RockPapeScizManager : MonoBehaviour
 		}
 
 		rpsSlider.gameObject.SetActive(true);
-		rpsSlider.SetUpSlider(enemy);
+		rpsSlider.SetUpSlider(enemy, cumulativeDifficulty);
 
 		selectedIndex = 0;
 		selected = cardsVisualOptions[0];
@@ -138,17 +142,21 @@ public class RockPapeScizManager : MonoBehaviour
 		handlingFinalResult = false;
 		var result = RockPapeScizSolver.solveOutcome(playerChosenState, enemyPickedState);
 		GlobalEvents.GetEvent<FightFinishedEvent>().Publish();
-		Debug.LogFormat("resolve rersult: {0}", result.ToString());
+		Debug.LogFormat("resolve result: {0}", result.ToString());
 		switch(result)
 		{
 			case RockPapeScizResult.Win:
+				cumulativeDifficulty = 0f;
 				ScoreManager.Get.AddScore();
 				enemy.Kill();
 				break;
 			case RockPapeScizResult.Loose:
+				cumulativeDifficulty = 0f;
 				ScoreManager.Get.RegisterLoseDraw();
 				break;
 			case RockPapeScizResult.Draw:
+				cumulativeDifficulty += _config.DrawDifficultyStepIncrease;
+				cumulativeDifficulty = Mathf.Clamp(cumulativeDifficulty, 0f, _config.DrawDifficultyMax);
 				StartCoroutine(ResummonFightNextFrame());
 				break;
 		}

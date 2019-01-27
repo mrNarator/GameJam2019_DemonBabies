@@ -20,6 +20,7 @@ public class EnemyResponsiveRPSSlider : MonoBehaviour
 
 	private bool setUp = false;
 	private bool sliderGoingRight = true;
+	private float extraSliderIncrease = 1f;
 
 	BaseConsumable referencedObject;
 
@@ -38,19 +39,20 @@ public class EnemyResponsiveRPSSlider : MonoBehaviour
 			UpdateMarkerPosition(-referencedObject.sliderSpeed);
 		}
 	}
-	public void SetUpSlider(BaseConsumable baseConsumable)
+	public void SetUpSlider(BaseConsumable baseConsumable, float extraIncrease)
 	{
 		Marker.rectTransform.anchoredPosition = new Vector2(UnityEngine.Random.Range(0, Background.rectTransform.rect.width),0);
 		referencedObject = baseConsumable;
 		ResolvePercentages();
 		UpdateFillAmounts();
 		setUp = true;
+		extraSliderIncrease += extraIncrease;
 	}
 
 	public void UpdateMarkerPosition(float sliderSpeed)
 	{
 		Vector2 newPosition = new Vector2(
-				Mathf.Clamp(Marker.rectTransform.anchoredPosition.x + sliderSpeed * Time.deltaTime * Time.timeScale, 
+				Mathf.Clamp(Marker.rectTransform.anchoredPosition.x + sliderSpeed  * extraSliderIncrease * Time.deltaTime * Time.timeScale, 
 				0 , 
 				Background.rectTransform.rect.width)
 			, 0);
