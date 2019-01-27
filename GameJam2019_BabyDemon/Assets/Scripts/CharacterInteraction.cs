@@ -62,6 +62,10 @@ namespace DB
 
 		private void OnTriggerEnter2D(Collider2D collision)
 		{
+			if(collision.gameObject.GetComponent<BaseConsumable>().state.isDead)
+			{
+				return;
+			}
 			interactableInRange.Add(collision.gameObject.transform);
 			InRange = interactableInRange.Any();
 		}

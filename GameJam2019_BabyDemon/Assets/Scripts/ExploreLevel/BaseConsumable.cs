@@ -62,7 +62,7 @@ public class BaseConsumable : MonoBehaviour
 		_rigibody.AddForce(new Vector2(0, throwUpForce), ForceMode2D.Impulse);
 		_rigibody.angularVelocity = angularVelocity;
 
-		Destroy(gameObject, 4);
+		Destroy(gameObject, 2);
 	}
 
 	[System.Serializable]

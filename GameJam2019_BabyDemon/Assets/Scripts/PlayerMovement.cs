@@ -6,6 +6,10 @@ public class PlayerMovement : MonoBehaviour
 	private Config _config;
 
 	private Rigidbody2D _rigidBody;
+
+	private SpriteRenderer spriteRenderer;
+	private bool walkingRight = true;
+
 	public bool IsGrounded { get; private set; }
 	private bool tryJump;
 
@@ -15,6 +19,11 @@ public class PlayerMovement : MonoBehaviour
 	private void Awake()
 	{
 		_rigidBody = GetComponent<Rigidbody2D>();
+		spriteRenderer = GetComponent<SpriteRenderer>();
+		if(spriteRenderer == null)
+		{
+			spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+		}
 	}
 
 	private void Start()
@@ -47,7 +56,6 @@ public class PlayerMovement : MonoBehaviour
 		{
 			return;
 		}
-
 		ApplyMovement();
 		if(tryJump)
 		{
@@ -62,6 +70,14 @@ public class PlayerMovement : MonoBehaviour
 		var moveInput = Input.GetAxis(DB.Const.Controls.HORIZONTAL);
 
 		var vel = _rigidBody.velocity;
+		if(vel.x>=0.01)
+		{
+			spriteRenderer.flipX = false;
+		}
+		else if( vel.x<-0.01)
+		{
+			spriteRenderer.flipX = true;
+		}
 		if(!IsGrounded)
 		{
 			if(Mathf.Approximately(Mathf.Epsilon, moveInput))
